@@ -23,6 +23,7 @@ const Image = (props) => {
     shape,
     className,
     radius,
+    preview,
   } = props;
 
   const styles = {
@@ -46,6 +47,7 @@ const Image = (props) => {
     className,
     _onClick,
     radius,
+    preview
   };
 
   // 로고 이미지 쓸때
@@ -76,7 +78,7 @@ const Image = (props) => {
 
   if (shape === "rectangle") {
     return (
-      <AspectOutter>
+      <AspectOutter {...styles}>
         <AspectInner {...styles} />
       </AspectOutter>
     );
