@@ -1,17 +1,31 @@
-// Action :: 이 모듈에서 일어날 수 있는 액션
+import axios from "axios";
 
-// Action Creator :: 액션을 만들어 주는 애 (액션은 반드시 'type'과 'payload'를 가진 객체다.)
+// Action
+const ADD_COMM = "comment/ADD_COMM";
 
-// Initial State :: 이 모듈의 스토어 초기 값을 설정해주는 애
-// const initialState =
+// Action creators
+export const addComment = (payload) => ({
+  type: ADD_COMM,
+  payload,
+});
 
-// Reducer : 액션 받아서 액션에 따라 스토어 값을 바꿔주는 애
+// 초기값
+const initialState = {
+  comments: [],
+};
+
+// 미들웨어
+
+// Reducer
 const mypage = (state = initialState, action) => {
   switch (action.type) {
+    case ADD_COMM: {
+      return;
+    }
+
     default:
       return state;
   }
 };
 
-// reducer를 내보낸다
 export default mypage;
