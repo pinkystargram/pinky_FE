@@ -81,6 +81,7 @@ const Image = (props) => {
       </AspectOutter>
     );
   }
+
   if (shape === "imgBtn") {
     return (
       <AspectOutter>
@@ -144,6 +145,7 @@ const AspectInner = styled.div`
   ${(props) => (props.src ? `background-image: url(${props.src});` : "")}
   background-size: cover;
 `;
+
 const MyProfile = styled.div`
   width: 150px;
   height: 150px;
