@@ -9,8 +9,8 @@ import { BsThreeDots } from "react-icons/bs";
 import { HiHome } from "react-icons/hi";
 import { AiFillFacebook } from "react-icons/ai";
 import { AiOutlineTable } from "react-icons/ai";
-import {IoPaperPlaneOutline} from "react-icons/io5";
-import {BsBookmark} from "react-icons/bs";
+import { IoPaperPlaneOutline } from "react-icons/io5";
+import { BsBookmark } from "react-icons/bs";
 
 const IconButton = (props) => {
   const {
@@ -34,7 +34,7 @@ const IconButton = (props) => {
     cursor,
     color,
     airplane,
-    bookmark
+    bookmark,
   } = props;
 
   const styles = {
@@ -161,7 +161,10 @@ const IconButton = (props) => {
     return (
       <React.Fragment>
         <Icon {...styles}>
-          <IoPaperPlaneOutline size={size} onClick={_onClick}></IoPaperPlaneOutline>
+          <IoPaperPlaneOutline
+            size={size}
+            onClick={_onClick}
+          ></IoPaperPlaneOutline>
         </Icon>
       </React.Fragment>
     );
