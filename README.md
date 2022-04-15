@@ -5,7 +5,7 @@
   
   <div align=center><strong>
  
-  <hr> link: http://woong-world.shop/ </hr>
+  <hr>  </hr>
   </strong></div>
   <hr></hr>
   
