@@ -17,14 +17,14 @@ import Header from "../components/Header";
 function App() {
   return (
     <React.Fragment>
-      <Header></Header>
       <ConnectedRouter history={history}>
+      <Header></Header>
         <Route path="/" exact component={Main} />
         <Route path="/login" exact component={Login} />
         <Route path="/signup" exact component={Signup} />
         <Route path="/PostWrite" exact component={PostWrite} />
         <Route path="/MyPage" exact component={MyPage} />
-        <Route path="/Detail" exact component={Detail} />
+        <Route path="/Detail/:id" exact component={Detail} />
       </ConnectedRouter>
     </React.Fragment>
   );
