@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import {} from "react-icons";
 import { Text, IconButton, Image } from "../elements";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { emailCheck } from "../shared/Common";
 
 import { _signUpFX } from "../redux/modules/user";
@@ -13,6 +13,7 @@ import Logo from "../assets/logo.png";
 const Signup = (props) => {
   const history = useHistory();
   const dispatch = useDispatch();
+  const isLogin = useSelector((state) => state.user.is_login);
 
   // 상태관리
   const [email, setEmail] = React.useState("");
@@ -31,17 +32,13 @@ const Signup = (props) => {
     dispatch(_signUpFX(email, nickName, password));
   };
 
+  useEffect(() => {
+    if (isLogin) history.push("/");
+  });
+
   return (
     <React.Fragment>
       <SignupGrid>
-        {/* <Image
-          imageType="logo"
-          width="175px"
-          height="70px"
-          bgsize="cover"
-          margin="20px auto 0px auto"
-          src="https://pngimage.net/wp-content/uploads/2018/06/instagram-font-png-1.png"
-        /> */}
         <Image
           imageType="logo"
           width="150px"

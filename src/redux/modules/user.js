@@ -1,28 +1,34 @@
 import axios from "axios";
-import { api, apis } from "../../shared/Api";
+import { apis } from "../../shared/Api";
 import { produce } from "immer";
 import { deleteCookie, getCookie, setCookie } from "../../shared/Cookie";
+import { handleActions } from "redux-actions";
 
 // Action
-const SET_USER = "SET_USER";
+const LOG_IN = "LOG_IN";
 const GET_USER = "GET_USER";
-const LOGOUT_USER = "LOGOUT_USER";
+const LOG_OUT = "LOG_OUT";
 
 // Action creators
-export const setUser = (payload) => ({
-  type: SET_USER,
+export const logIn = (payload) => ({
+  type: LOG_IN,
+  payload,
+});
+
+export const logOut = (payload) => ({
+  type: LOG_OUT,
   payload,
 });
 
 // 초기값
 const initialState = {
-  user: { email: "", nickname: "", password: "" },
+  user: { email: null, nickname: null },
   is_login: false,
 };
 
 // 미들웨어
 export const _signUpFX = (email, nickname, password) => {
-  // console.log("회원가입 정보", email, nickname, password);
+  console.log("회원가입 정보", email, nickname, password);
   return function (dispatch, getState, { history }) {
     apis
       .signup(email, nickname, password)
@@ -50,17 +56,14 @@ export const _loginFX = (email, password) => {
         setCookie("ACCESS_TOKEN", res.data.atoken, 1);
         setCookie("REFRESH_TOKEN", res.data.rtoken, 1);
         localStorage.setItem("nickname", res.data.nickname);
-        localStorage.setItem("is_login", true);
+        // localStorage.setItem("is_login", true);
 
-        //   res.cookie('user', token, {
-        //     httpOnly: true,
-        // });
-
-        //       Domain : dingrr.com
-        // SameSite: LAX
-        // HttpOnly : True
-
-        dispatch(setUser({ email: email, nickname: res.data.nickname }));
+        dispatch(
+          logIn({
+            email: res.data.email,
+            nickname: res.data.nickname,
+          })
+        );
         history.replace("/");
       })
 
@@ -71,16 +74,60 @@ export const _loginFX = (email, password) => {
   };
 };
 
-// Reducer
-const user = (state = initialState, action) => {
-  switch (action.type) {
-    case SET_USER: {
-      return;
-    }
+export const _loginCheckFX = () => {
+  return function (dispatch, getState, { history }) {
+    const atoken = getCookie("ACCESS_TOKEN");
+    const rtoken = getCookie("REFRESH_TOKEN");
+    console.log(atoken, "구분선입니다", rtoken);
 
-    default:
-      return state;
-  }
+    if ((atoken, rtoken)) {
+      apis
+        .loginCheck(atoken, rtoken)
+        .then((res) => {
+          console.log(res);
+
+          if (res.data.atoken) setCookie("ACCESS_TOKEN", res.data.atoken, 1);
+
+          localStorage.setItem("nickname", res.data.nickname);
+
+          dispatch(
+            logIn({
+              email: res.data.email,
+              nickname: res.data.nickname,
+            })
+          );
+        })
+        .catch((error) => console.log(error));
+    }
+  };
 };
 
-export default user;
+export const _logoutFX = () => {
+  return function (dispatch, getState, { history }) {
+    deleteCookie("ACCESS_TOKEN");
+    deleteCookie("REFRESH_TOKEN");
+    localStorage.removeItem("nickname");
+    dispatch(logOut());
+    history.replace("/login");
+  };
+};
+
+export default handleActions(
+  {
+    [LOG_IN]: (state, action) =>
+      produce(state, (draft) => {
+        console.log(state, draft, action.payload);
+        draft.user = action.payload;
+        draft.is_login = true;
+      }),
+
+    [LOG_OUT]: (state, action) =>
+      produce(state, (draft) => {
+        console.log(state, draft, action.payload);
+        draft.user = null;
+        draft.user.email = null;
+        draft.user.nickname = null;
+      }),
+  },
+  initialState
+);
