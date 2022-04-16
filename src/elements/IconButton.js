@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { AiOutlineHeart, AiOutlineCheck,AiOutlineClose } from "react-icons/ai";
+import { AiOutlineHeart, AiOutlineCheck, AiOutlineClose } from "react-icons/ai";
 import { BiArrowBack, BiMessageRounded } from "react-icons/bi";
 import { FaRegComment, FaRegCompass } from "react-icons/fa";
 import { FcLike } from "react-icons/fc";
@@ -36,6 +36,7 @@ const IconButton = (props) => {
     airplane,
     bookmark,
     cancle,
+    setting,
   } = props;
 
   const styles = {

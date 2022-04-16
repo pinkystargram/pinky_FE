@@ -1,12 +1,12 @@
 import axios from "axios";
-const BASEURL = process.env.REACT_APP_BASEURL;
+import { deleteCookie, getCookie, setCookie } from "./Cookie";
 
 const tokencheck = document.cookie;
 const token = tokencheck.split("=")[1];
 
 export const api = axios.create({
   // 실제 베이스 유알엘
-  baseURL: BASEURL,
+  baseURL: "http://52.79.81.116:3000/",
 
   headers: {
     "content-type": "application/json;charset=UTF-8",
@@ -16,9 +16,20 @@ export const api = axios.create({
   },
 });
 
-api.interceptors.request.use(function (config) {
-  const accessToken = document.cookie.split("=")[1];
-  config.headers.common["authorization"] = `${accessToken}`;
+// api.interceptors.request.use(function (config) {
+//   const accessToken = document.cookie.split("=")[1];
+//   config.headers.common["authorization"] = `${accessToken}`;
+//   return config;
+// });
+
+api.interceptors.request.use((config) => {
+  const atoken = getCookie("ACCESS_TOKEN");
+  const rtoken = getCookie("REFRESH_TOKEN");
+
+  if (atoken && rtoken) {
+    config.headers.common["Authorization"] = `Bearer ${atoken}`;
+    config.headers.common["reAuthorization"] = `Bearer ${rtoken}`;
+  }
   return config;
 });
 
@@ -31,5 +42,11 @@ export const apis = {
       email: email,
       nickname: nickname,
       password: password,
+    }),
+
+  loginCheck: (atoken, rtoken) =>
+    api.get("/api/users/auth", {
+      atoken: atoken,
+      rtoken: rtoken,
     }),
 };

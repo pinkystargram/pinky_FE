@@ -1,16 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import {} from "react-icons";
 import { Text, IconButton, Image } from "../elements";
-import { useDispatch } from "react-redux";
-import { _loginFX } from "../redux/modules/user";
+import { useDispatch, useSelector } from "react-redux";
+import { _loginFX, _loginCheckFX } from "../redux/modules/user";
 import { emailCheck } from "../shared/Common";
 import Logo from "../assets/logo.png";
 
 const Login = () => {
   const dispatch = useDispatch();
   const history = useHistory();
+  const isLogin = useSelector((state) => state.user.is_login);
 
   //상태관리
   const [email, setEmail] = React.useState("");
@@ -32,15 +33,13 @@ const Login = () => {
     dispatch(_loginFX(email, password));
   };
 
+  useEffect(() => {
+    if (isLogin) history.push("/");
+  });
+
   return (
     <React.Fragment>
-      <LoginGrid
-        padding="10px 0"
-        maxWidth="350px"
-        border="1px solid #e4e4e4"
-        margin="0px auto 0px auto"
-        bg="#fff"
-      >
+      <LoginGrid>
         <Image
           imageType="logo"
           width="150px"
@@ -73,11 +72,7 @@ const Login = () => {
             </Text>
             <Line />
           </LineGrid>
-          <FacebookGrid
-            margin="30px auto 20px auto"
-            cursor="pointer"
-            maxWidth="180px"
-          >
+          <FacebookGrid>
             <IconButton
               facebookLogo
               margin="0 8px 0 0"
@@ -91,13 +86,7 @@ const Login = () => {
         </Grid>
       </LoginGrid>
 
-      <SignupWrapGrid
-        padding="10px 0"
-        maxWidth="350px"
-        border="1px solid #e4e4e4"
-        margin="10px auto"
-        bg="#fff"
-      >
+      <SignupWrapGrid>
         <SignupGrid>
           <Text margin="15px 0 15px auto" size="14px">
             계정이 없으신가요?
@@ -154,6 +143,15 @@ const Login = () => {
           src="https://www.instagram.com/static/images/appstore-install-badges/badge_android_korean-ko.png/f155b664a93b.png"
         ></Image>
       </AppDownGrid>
+      {/* 
+      <LoginBtn
+        onClick={() => {
+          console.log("R토큰 test");
+          dispatch(_loginCheckFX());
+        }}
+      >
+        토큰 테스트
+      </LoginBtn> */}
     </React.Fragment>
   );
 };

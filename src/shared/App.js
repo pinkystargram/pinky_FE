@@ -1,11 +1,15 @@
 import "./App.css";
 
-import React from "react";
+import React, { useEffect } from "react";
 
 import { Route } from "react-router-dom";
 
 import { ConnectedRouter } from "connected-react-router";
 import { history } from "../redux/configStore";
+import { useDispatch } from "react-redux";
+
+import { _loginCheckFX } from "../redux/modules/user";
+
 import Login from "../pages/Login";
 import Signup from "../pages/Signup";
 import Detail from "../pages/Detail";
@@ -15,10 +19,19 @@ import MyPage from "../pages/MyPage";
 import Header from "../components/Header";
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (document.cookie) {
+      dispatch(_loginCheckFX());
+      // dispatch(setPostDB());
+    }
+  }, []);
+
   return (
     <React.Fragment>
       <ConnectedRouter history={history}>
-      <Header></Header>
+        <Header></Header>
         <Route path="/" exact component={Main} />
         <Route path="/login" exact component={Login} />
         <Route path="/signup" exact component={Signup} />
