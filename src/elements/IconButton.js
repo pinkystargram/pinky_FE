@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { AiOutlineHeart, AiOutlineCheck } from "react-icons/ai";
+import { AiOutlineHeart, AiOutlineCheck,AiOutlineClose } from "react-icons/ai";
 import { BiArrowBack, BiMessageRounded } from "react-icons/bi";
 import { FaRegComment, FaRegCompass } from "react-icons/fa";
 import { FcLike } from "react-icons/fc";
@@ -35,7 +35,7 @@ const IconButton = (props) => {
     color,
     airplane,
     bookmark,
-    setting,
+    cancle,
   } = props;
 
   const styles = {
@@ -153,6 +153,16 @@ const IconButton = (props) => {
       <React.Fragment>
         <Icon {...styles}>
           <HiHome size={size} onClick={_onClick}></HiHome>
+        </Icon>
+      </React.Fragment>
+    );
+  }
+
+  if (cancle) {
+    return (
+      <React.Fragment>
+        <Icon {...styles}>
+          <AiOutlineClose size={size} onClick={_onClick}></AiOutlineClose>
         </Icon>
       </React.Fragment>
     );

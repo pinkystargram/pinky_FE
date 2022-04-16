@@ -11,8 +11,8 @@ const styles={position}
 
 
     return(
-        <RecommendWrapper {...styles}>
-            <MyProfile>
+        <>
+        <MyProfile>
                 <Image imageType="circle" size="50"/>
                 <div style={{marginTop:"-20px", marginLeft:"-120px"}}>
                     <Text bold color="#2a2a2a" size="14px">userid</Text>
@@ -29,7 +29,8 @@ const styles={position}
             <RecommendItem/>
             <RecommendItem/>
             <RecommendItem/>
-        </RecommendWrapper>
+        </>
+            
     )
 }
 const MyProfile =styled.div`
@@ -40,12 +41,7 @@ display:flex;
 align-items:center;
 justify-content:space-between;
 `
-const RecommendWrapper=styled.div`
-position:fixed;
-top:50%;
-right:320px;
-transform:translateY(-50%)
-`
+
 const RecommendHeader=styled.div`
 width:300px;
 display:flex;

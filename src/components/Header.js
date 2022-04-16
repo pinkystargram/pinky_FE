@@ -3,21 +3,30 @@ import styled from "styled-components";
 import IconButton from "../elements/IconButton";
 import Image from "../elements/Image";
 import logo from "../assets/logo.png";
+import {useHistory} from "react-router-dom";
+
 
 const Header = () => {
+  const history=useHistory();
+  const goMain=()=>{
+    history.push("/");
+  }
+  const goWrite =()=>{
+    history.push("/PostWrite");
+  }
   return (
       <HeaderWrap>
         <HeaderWrapper>
-          <img src={logo}/>
+          <img src={logo} onClick={goMain} style={{cursor:"pointer"}}/>
           <SearchBar/>
-          <div style={{display:"flex", width:"300px"}}>
+          <IConBtns>
             <IconButton home/>
             <IconButton airplane/>
-            <IconButton plusIcon/>
+            <IconButton plusIcon _onClick={goWrite}/>
             <IconButton compass/>
             <IconButton unLikeIcon/>
             <Image imageType="circle"/>
-          </div>
+          </IConBtns>
           
         </HeaderWrapper>
       </HeaderWrap>
@@ -32,7 +41,7 @@ border-bottom:1px solid #e4e4e4;
 position:fixed;
 top:0;
 left:0;
-z-index:3;
+z-index:1;
 `
 const SearchBar =styled.input`
 type:text;
@@ -52,8 +61,13 @@ box-sizing:border-box;
 display:flex;
 align-items:center;
 justify-content:space-between;
-
-
+`
+const IConBtns =styled.div`
+display:flex;
+width:300px;
+// background:red;
+justify-content:space-between;
+align-items:center;
 `
 
 

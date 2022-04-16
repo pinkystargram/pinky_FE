@@ -3,18 +3,19 @@ import styled from "styled-components";
 import Text from "../elements/Text";
 import IconButton from "../elements/IconButton";
 import Image from "../elements/Image";
+import {useHistory} from "react-router-dom";
 
-
-
-const Post = () => {
+const Post = (props) => {
+  const history=useHistory();
+  const goDetail =()=>{
+    history.push("/Detail/:id")
+  }
   return (
-    
-
     <PostContainer>
       <PostHeader>
         <div style={{width:"90%",display:"flex",alignItems:"center"}} >
           <Image imageType ="circle"/>
-          <Text bold color="#323232" margin="10px">godnjs13579</Text>
+          <Text bold color="#323232" margin="10px">{props.username}</Text>
         </div>
         <IconButton moreView size="16px" color="#323232"/>
       </PostHeader>
@@ -29,11 +30,10 @@ const Post = () => {
             <IconButton bookmark/>
           </PostContentHeader>
           <PostContentContent>
-            <Text bold >좋아요 58,089개</Text>
-            <Text size="14px" margin="-10px 0px 0px 0px">댓글 277개 모두보기</Text>
+            <Text bold >좋아요 {props.likeCnt}개</Text>
+            <Text size="14px" margin="-10px 0px 0px 0px" _onClick={goDetail} cursor="pointer">댓글 {props.commentCnt}개 모두보기</Text>
             <Text size="8px">3일전</Text>
           </PostContentContent>
-
         </PostContent>
     </PostContainer>
   
@@ -41,12 +41,19 @@ const Post = () => {
   ;
 };
 
+Post.defaultProps={
+  username:"qpinky12",
+  likeCnt:27,
+  commentCnt:58089,
+  insert_dt:"2021-01-01 11:11",
 
+}
 
 const PostContainer =styled.div`
 max-width:614px;
 background:white;
 border:1px solid #e4e4e4;
+margin-bottom:10px;
 `
 const PostHeader =styled.div`
 width:100%;
@@ -69,7 +76,6 @@ padding:10px;
 box-sizing:border-box;
 display:flex;
 justify-content:space-between;
-// background:yellow;
 `
 const PostContentContent =styled.div`
 margin-top:-15px;
