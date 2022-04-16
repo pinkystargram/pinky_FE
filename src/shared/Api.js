@@ -7,11 +7,9 @@ const token = tokencheck.split("=")[1];
 export const api = axios.create({
   // 실제 베이스 유알엘
   baseURL: BASEURL,
-
   headers: {
     "content-type": "application/json;charset=UTF-8",
     accept: "application/json",
-
     token: token,
   },
 });

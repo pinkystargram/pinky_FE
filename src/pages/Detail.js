@@ -21,12 +21,10 @@ const Detail = (props) => {
           <div style={{marginTop:"50px"}}> 
             <Image imageType="rectangle"/>
           </div>
-           
         </ImageDiv>
         <ContentDiv>
           <PostHeader>
             <div style={{width:"90%",display:"flex",alignItems:"center"}} >
-              
               <Image imageType ="circle"/>
               <Text bold color="#323232" margin="10px">{props.username}</Text>
             </div>
@@ -95,7 +93,6 @@ height:600px;
 background:white;
 z-index:4;
 float:left;
-
 `
 
 const CommentListWrapper=styled.div`
