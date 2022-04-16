@@ -4,13 +4,15 @@ import { AiOutlineHeart, AiOutlineCheck, AiOutlineClose } from "react-icons/ai";
 import { BiArrowBack, BiMessageRounded } from "react-icons/bi";
 import { FaRegComment, FaRegCompass } from "react-icons/fa";
 import { FcLike } from "react-icons/fc";
-import { MdOutlineAddBox } from "react-icons/md";
+import { MdOutlineAddBox, MdOutlineAddAPhoto} from "react-icons/md";
 import { BsThreeDots } from "react-icons/bs";
 import { HiHome } from "react-icons/hi";
 import { AiFillFacebook } from "react-icons/ai";
 import { AiOutlineTable } from "react-icons/ai";
+import { GoLocation} from "react-icons/go";
 import { IoPaperPlaneOutline, IoSettingsSharp } from "react-icons/io5";
 import { BsBookmark } from "react-icons/bs";
+
 
 const IconButton = (props) => {
   const {
@@ -36,6 +38,8 @@ const IconButton = (props) => {
     airplane,
     bookmark,
     cancle,
+    photo,
+    location,
     setting,
   } = props;
 
@@ -187,6 +191,26 @@ const IconButton = (props) => {
       <React.Fragment>
         <Icon {...styles}>
           <BsBookmark size={size} onClick={_onClick}></BsBookmark>
+        </Icon>
+      </React.Fragment>
+    );
+  }
+
+  if (photo) {
+    return (
+      <React.Fragment>
+        <Icon {...styles}>
+          <MdOutlineAddAPhoto size={size} onClick={_onClick}></MdOutlineAddAPhoto>
+        </Icon>
+      </React.Fragment>
+    );
+  }
+
+  if (location) {
+    return (
+      <React.Fragment>
+        <Icon {...styles}>
+          <GoLocation size={size} onClick={_onClick}></GoLocation>
         </Icon>
       </React.Fragment>
     );

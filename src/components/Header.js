@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import IconButton from "../elements/IconButton";
+import {IconButton} from "../elements/index";
 import Image from "../elements/Image";
 import logo from "../assets/logo.png";
 import {useHistory} from "react-router-dom";
@@ -12,7 +12,7 @@ const Header = () => {
     history.push("/");
   }
   const goWrite =()=>{
-    history.push("/PostWrite");
+    history.push("/ImagePost");
   }
   return (
       <HeaderWrap>
@@ -20,14 +20,13 @@ const Header = () => {
           <img src={logo} onClick={goMain} style={{cursor:"pointer"}}/>
           <SearchBar/>
           <IConBtns>
-            <IconButton home/>
-            <IconButton airplane/>
-            <IconButton plusIcon _onClick={goWrite}/>
-            <IconButton compass/>
-            <IconButton unLikeIcon/>
-            <Image imageType="circle"/>
+            <IconButton home color="grey"/>
+            <IconButton airplane color="grey"/>
+            <IconButton plusIcon _onClick={goWrite} color="grey"/>
+            <IconButton compass color="grey"/>
+            <IconButton unLikeIcon color="grey"/>
+            <Image imageType="circle" color="grey"/>
           </IConBtns>
-          
         </HeaderWrapper>
       </HeaderWrap>
   );
