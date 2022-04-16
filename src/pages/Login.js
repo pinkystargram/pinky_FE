@@ -4,8 +4,9 @@ import { useHistory } from "react-router-dom";
 import {} from "react-icons";
 import { Text, IconButton, Image } from "../elements";
 import { useDispatch } from "react-redux";
-// import { actionCreators as userActions } from "../redux/modules/userReducer";
-// import { emailCheck } from "../shared/common";
+import { _loginFX } from "../redux/modules/user";
+import { emailCheck } from "../shared/Common";
+import Logo from "../assets/logo.png";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -13,22 +14,22 @@ const Login = () => {
 
   //상태관리
   const [email, setEmail] = React.useState("");
-  const [pwd, setPwd] = React.useState("");
+  const [password, setPassword] = React.useState("");
 
   const login = () => {
     if (email === "") {
       alert("이메일를 입력해주세요.");
       return;
     }
-    if (pwd === "") {
+    if (password === "") {
       alert("비밀번호를 입력해주세요.");
       return;
     }
-    // if (!emailCheck(email)) {
-    //   window.alert("이메일 형식이 맞지 않습니다!");
-    //   return;
-    // }
-    // dispatch(userActions.loginDB(email, pwd));
+    if (!emailCheck(email)) {
+      window.alert("이메일 형식이 맞지 않습니다!");
+      return;
+    }
+    dispatch(_loginFX(email, password));
   };
 
   return (
@@ -42,11 +43,11 @@ const Login = () => {
       >
         <Image
           imageType="logo"
-          width="175px"
-          height="70px"
-          bgsize="cover"
+          width="150px"
+          height="39px"
+          bgsize="contain"
           margin="20px auto"
-          src="https://pngimage.net/wp-content/uploads/2018/06/instagram-font-png-1.png"
+          src={Logo}
         />
         <Grid>
           <LoginInput
@@ -59,12 +60,12 @@ const Login = () => {
           <LoginInput
             type="password"
             onChange={(e) => {
-              setPwd(e.target.value);
+              setPassword(e.target.value);
             }}
             onSubmit={() => {}}
             placeholder="비밀번호"
           ></LoginInput>
-          <LoginBtn _onClick={login}>로그인</LoginBtn>
+          <LoginBtn onClick={login}>로그인</LoginBtn>
           <LineGrid>
             <Line />
             <Text size="13px" margin="0 18px" color="#8e8e8e" bold>
@@ -73,7 +74,6 @@ const Login = () => {
             <Line />
           </LineGrid>
           <FacebookGrid
-            is_flex
             margin="30px auto 20px auto"
             cursor="pointer"
             maxWidth="180px"
@@ -168,7 +168,7 @@ const LoginGrid = styled.div`
   justify-content: center;
   justify-items: center;
   flex-direction: column;
-  margin: 0 auto;
+  margin: 150px auto 0 auto;
 `;
 
 const LoginInput = styled.input`

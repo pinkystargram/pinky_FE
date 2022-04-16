@@ -47,7 +47,7 @@ const Image = (props) => {
     className,
     _onClick,
     radius,
-    preview
+    preview,
   };
 
   // 로고 이미지 쓸때

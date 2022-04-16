@@ -9,7 +9,7 @@ import { BsThreeDots } from "react-icons/bs";
 import { HiHome } from "react-icons/hi";
 import { AiFillFacebook } from "react-icons/ai";
 import { AiOutlineTable } from "react-icons/ai";
-import { IoPaperPlaneOutline } from "react-icons/io5";
+import { IoPaperPlaneOutline, IoSettingsSharp } from "react-icons/io5";
 import { BsBookmark } from "react-icons/bs";
 
 const IconButton = (props) => {
@@ -190,6 +190,16 @@ const IconButton = (props) => {
       </React.Fragment>
     );
   }
+
+  if (setting) {
+    return (
+      <React.Fragment>
+        <Icon {...styles}>
+          <IoSettingsSharp size={size} onClick={_onClick}></IoSettingsSharp>
+        </Icon>
+      </React.Fragment>
+    );
+  }
   return <React.Fragment></React.Fragment>;
 };
 
@@ -210,7 +220,7 @@ IconButton.defaultProps = {
   moreView: false,
   width: "100%",
   cursor: "pointer",
-  color: false,
+  color: "white",
 };
 
 const Icon = styled.div`

@@ -8,6 +8,8 @@ import { emailCheck } from "../shared/Common";
 
 import { _signUpFX } from "../redux/modules/user";
 
+import Logo from "../assets/logo.png";
+
 const Signup = (props) => {
   const history = useHistory();
   const dispatch = useDispatch();
@@ -32,13 +34,21 @@ const Signup = (props) => {
   return (
     <React.Fragment>
       <SignupGrid>
-        <Image
+        {/* <Image
           imageType="logo"
           width="175px"
           height="70px"
           bgsize="cover"
           margin="20px auto 0px auto"
           src="https://pngimage.net/wp-content/uploads/2018/06/instagram-font-png-1.png"
+        /> */}
+        <Image
+          imageType="logo"
+          width="150px"
+          height="39px"
+          bgsize="contain"
+          margin="20px auto"
+          src={Logo}
         />
         <Text
           weight="900"
@@ -143,7 +153,7 @@ const Signup = (props) => {
       </LoginWrapGrid>
 
       <AppTextGrid>
-        <Text margin="20px auto 10px auto" textalign="center" size="14px">
+        <Text margin="20px auto 10px auto" textalign size="14px">
           앱을 다운로드하세요.
         </Text>
       </AppTextGrid>
@@ -193,7 +203,7 @@ const SignupGrid = styled.div`
   justify-content: center;
   justify-items: center;
   flex-direction: column;
-  margin: 0 auto;
+  margin: 150px auto 0 auto;
 `;
 
 const FormGrid = styled.form`
