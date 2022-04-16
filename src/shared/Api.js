@@ -1,16 +1,17 @@
 import axios from "axios";
+const BASEURL = process.env.REACT_APP_BASEURL;
 
 const tokencheck = document.cookie;
 const token = tokencheck.split("=")[1];
 
 export const api = axios.create({
   // 실제 베이스 유알엘
-  baseURL: "http://localhost:3003/",
+  baseURL: BASEURL,
 
   headers: {
     "content-type": "application/json;charset=UTF-8",
     accept: "application/json",
-    // accept: "application/json,",
+
     token: token,
   },
 });
@@ -23,10 +24,10 @@ api.interceptors.request.use(function (config) {
 
 export const apis = {
   login: (email, password) =>
-    api.post("/user/login", { email: email, password: password }),
+    api.post("/api/users/login", { email: email, password: password }),
 
   signup: (email, nickname, password) =>
-    api.post("/user/signup", {
+    api.post("/api/users/signup", {
       email: email,
       nickname: nickname,
       password: password,
