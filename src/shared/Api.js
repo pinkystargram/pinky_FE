@@ -24,10 +24,9 @@ api.interceptors.request.use((config) => {
   const atoken = getCookie("ACCESS_TOKEN");
   const rtoken = getCookie("REFRESH_TOKEN");
 
-  if (atoken && rtoken) {
-    config.headers.common["Authorization"] = `Bearer ${atoken}`;
-    config.headers.common["reAuthorization"] = `Bearer ${rtoken}`;
-  }
+  config.headers.common["Authorization"] = `Bearer ${atoken}`;
+  config.headers.common["reAuthorization"] = `Bearer ${rtoken}`;
+
   return config;
 });
 
@@ -42,9 +41,5 @@ export const apis = {
       password: password,
     }),
 
-  loginCheck: (atoken, rtoken) =>
-    api.get("/api/users/auth", {
-      atoken: atoken,
-      rtoken: rtoken,
-    }),
+  loginCheck: () => api.get("/api/users/auth"),
 };

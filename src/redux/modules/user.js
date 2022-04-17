@@ -22,7 +22,7 @@ export const logOut = (payload) => ({
 
 // 초기값
 const initialState = {
-  user: { email: null, nickname: null },
+  user: { email: null, nickname: null, atoken: null },
   is_login: false,
 };
 
@@ -53,6 +53,11 @@ export const _loginFX = (email, password) => {
       .then((res) => {
         console.log(res);
 
+        if (res.data.result === false) {
+          history.replace("/login");
+          return window.alert(res.data.message);
+        }
+
         setCookie("ACCESS_TOKEN", res.data.atoken, 1);
         setCookie("REFRESH_TOKEN", res.data.rtoken, 1);
         localStorage.setItem("nickname", res.data.nickname);
@@ -68,7 +73,6 @@ export const _loginFX = (email, password) => {
       })
 
       .catch((error) => {
-        alert("로그인에 실패했습니다.");
         console.log(error);
       });
   };
@@ -78,26 +82,36 @@ export const _loginCheckFX = () => {
   return function (dispatch, getState, { history }) {
     const atoken = getCookie("ACCESS_TOKEN");
     const rtoken = getCookie("REFRESH_TOKEN");
-    console.log(atoken, "구분선입니다", rtoken);
 
     if ((atoken, rtoken)) {
       apis
-        .loginCheck(atoken, rtoken)
+        .loginCheck()
         .then((res) => {
           console.log(res);
 
-          if (res.data.atoken) setCookie("ACCESS_TOKEN", res.data.atoken, 1);
+          if (res.data.result === false) {
+            window.alert(res.data.message);
+            return dispatch(_logoutFX());
+          }
 
-          localStorage.setItem("nickname", res.data.nickname);
+          if (res.data.atoken) {
+            setCookie("ACCESS_TOKEN", res.data.atoken, 1);
 
-          dispatch(
-            logIn({
-              email: res.data.email,
-              nickname: res.data.nickname,
-            })
-          );
+            localStorage.setItem("nickname", res.data.nickname);
+
+            dispatch(
+              logIn({
+                email: res.data.email,
+                nickname: res.data.nickname,
+              })
+            );
+          }
         })
-        .catch((error) => console.log(error));
+        .catch((error) => {
+          console.log(error);
+          window.alert(error.message);
+          history.push("/login");
+        });
     }
   };
 };
