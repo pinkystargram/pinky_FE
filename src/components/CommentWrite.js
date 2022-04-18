@@ -48,14 +48,14 @@ const CommentsWrite = () => {
           _onClick={write}
           bold
           color="#e72674"
-          margin="13px 5px"
+          margin="13px 0px 10px 13px"
           cursor="pointer"
           size="15px"
         >
           게시
         </Text>
       ) : (
-        <Text size="15px" bold color="#F2A6C5" margin="13px 5px">
+        <Text size="15px" bold color="#F2A6C5" margin="13px 0px 10px 13px">
           게시
         </Text>
       )}
@@ -67,7 +67,7 @@ const CommentInput = styled.textarea`
   margin: 0;
   border: none;
   padding: 10px;
-  min-width: 610px;
+  width: 85%;
   height: 34px;
   outline: none;
   resize: none;

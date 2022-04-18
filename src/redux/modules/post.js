@@ -6,7 +6,7 @@ import { api } from '../../shared/Api';
 
 const ADD_POST = 'ADD_POST';
 const GET_POST = 'GET_POST';
-
+const DELETE_POST = "DELETE_POST";
 
 //initialState
 const initialState = {
@@ -18,6 +18,7 @@ const initialState = {
 
 const addPost = createAction(ADD_POST, (postData) => ({ postData }))
 const getPost = createAction(GET_POST, (postList) => ({ postList }))
+const deletePost = createAction(DELETE_POST, (postId) => ({ postId }));
 
 //미들웨어
 //  const onDrop = useCallback(async acceptedFiles => {
@@ -71,6 +72,21 @@ const addPostDB = (content = "", image="",location = "") => {
     };
   };
 
+  const deletePostDB = (postId) => {
+    return function (dispatch, getState, { history }) {
+      api
+        .post("/api/posts/:postId",postId)
+        .then(function (response) {
+          console.log(response)
+          return;
+          history.replace("/");
+        })
+        .catch(function (err) {
+          alert("삭제 실패");
+        });
+    };
+  };
+
 
 
 
@@ -94,6 +110,7 @@ const actionCreators = {
     addPost,
     addPostDB,
     getPostDB,
+    deletePostDB,
   };
   
   export { actionCreators };
