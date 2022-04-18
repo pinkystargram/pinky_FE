@@ -8,7 +8,6 @@ import MediaQuery, { useMediaQuery } from 'react-responsive';
 
 
 const Header = () => {
-
   const isPc = useMediaQuery ({
     query : "(min-width : 1000px) and (max-width :1920px)"
     });
