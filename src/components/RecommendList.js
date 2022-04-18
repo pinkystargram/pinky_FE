@@ -1,24 +1,31 @@
 import React from "react";
 import styled from "styled-components";
 import RecommendItem from "../components/RecommendItem";
-import Text from "../elements/Text";
-import Image from "../elements/Image";
+import { useSelector } from "react-redux";
+import {Text,Grid,Image} from "../elements/index";
 
 const RecommendList =(props)=>{
 
-const {position}=props;
-const styles={position}
+const userId=useSelector((state)=>state.user.user.email?state.user.user.email:"userId@naver.com")
+const nickname=useSelector((state)=>state.user.user.nickname?state.user.user.nickname:"nickname")
 
 
     return(
         <>
         <MyProfile>
+            <div >
                 <Image imageType="circle" size="50"/>
-                <div style={{marginTop:"-20px", marginLeft:"-120px"}}>
-                    <Text bold color="#2a2a2a" size="14px">userid</Text>
-                    <Text bold color="#949494" size="14px" margin="-14px 0px 0px 0px">username</Text>
-                </div>   
-                <Text color="#29c5f6" size="10px" bold >전환</Text>
+            </div>
+            <Grid is_flex >
+                <Grid  margin="-20px 0px 0px 0px" padding="0px 10px">
+                    <Text bold color="#2a2a2a" size="14px">{userId}</Text>
+                    <Text bold color="#949494" size="14px" margin="-14px 0px 0px 0px">{nickname}</Text>
+                </Grid>
+                <Grid  width="40px" margin="0px -10px 0px 0px">
+                    <Text color="rgb(231, 38, 116)" size="12px" bold >전환</Text>
+                </Grid>
+            </Grid>    
+                
             </MyProfile>
             <RecommendHeader>
                 <Text bold size="14px">회원님을 위한 추천</Text>
@@ -33,9 +40,14 @@ const styles={position}
             
     )
 }
+RecommendList.defaultProps={
+    userId:"userId@naver.com",
+    nickname:"nickname"
+}
+
 const MyProfile =styled.div`
 width:300px;
-padding:0px 10px;
+padding:10px 10px;
 box-sizing:border-box;
 display:flex;
 align-items:center;
@@ -50,9 +62,6 @@ justify-content:space-between;
 padding:0px 10px;
 box-sizing:border-box;
 align-items:center;
-
-
-
 `
 
 export default RecommendList;

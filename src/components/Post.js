@@ -19,13 +19,13 @@ const Post = (props) => {
         </div>
         <IconButton moreView size="16px" color="#323232"/>
       </PostHeader>
-          <Image shape="rectangle" height="450px" width="100%"/>
+          <Image shape="rectangle"  maxWidth="100%" height="400px"/>
         <PostContent width="100%">
           <PostContentHeader>
             <div style={{width:"100px",display:"flex",justifyContent:"space-between"}} >
-            <IconButton unLikeIcon/>
-            <IconButton message/>
-            <IconButton airplane/>
+            <IconButton unLikeIcon color="black"/>
+            <IconButton message color="black"/>
+            <IconButton airplane color="black"/>
             </div>
             <IconButton bookmark/>
           </PostContentHeader>
@@ -50,7 +50,7 @@ Post.defaultProps={
 }
 
 const PostContainer =styled.div`
-max-width:614px;
+width:100%;
 background:white;
 border:1px solid #e4e4e4;
 margin-bottom:10px;

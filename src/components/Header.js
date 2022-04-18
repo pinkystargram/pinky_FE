@@ -4,9 +4,14 @@ import {IconButton} from "../elements/index";
 import Image from "../elements/Image";
 import logo from "../assets/logo.png";
 import {useHistory} from "react-router-dom";
+import MediaQuery, { useMediaQuery } from 'react-responsive';
 
 
 const Header = () => {
+
+  const isPc = useMediaQuery ({
+    query : "(min-width : 1000px) and (max-width :1920px)"
+    });
   const history=useHistory();
   const goMain=()=>{
     history.push("/");
@@ -18,14 +23,14 @@ const Header = () => {
       <HeaderWrap>
         <HeaderWrapper>
           <img src={logo} onClick={goMain} style={{cursor:"pointer"}}/>
-          <SearchBar/>
+          {isPc?<SearchBar/>:null}
           <IConBtns>
-            <IconButton home color="grey"/>
-            <IconButton airplane color="grey"/>
-            <IconButton plusIcon _onClick={goWrite} color="grey"/>
-            <IconButton compass color="grey"/>
-            <IconButton unLikeIcon color="grey"/>
-            <Image imageType="circle" color="grey"/>
+            <IconButton home color="black" _onClick={goMain}/>
+            <IconButton airplane color="black"/>
+            <IconButton plusIcon _onClick={goWrite} color="black"/>
+            <IconButton compass color="black"/>
+            <IconButton unLikeIcon color="black"/>
+            <Image imageType="circle" color="black"/>
           </IConBtns>
         </HeaderWrapper>
       </HeaderWrap>
@@ -53,7 +58,7 @@ background:#e4e4e4;
 `
 
 const HeaderWrapper=styled.div`
-width:1000px;
+max-width:1000px;
 margin:0 auto;
 padding:6px;
 box-sizing:border-box;

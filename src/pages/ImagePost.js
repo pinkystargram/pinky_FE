@@ -3,6 +3,7 @@ import styled from "styled-components";
 import MyDropzone from "../components/MyDropZone";
 import { IconButton } from "../elements";
 import {useHistory} from "react-router-dom";
+import Main from "../pages/Main"
 import ImageUploadForm from "../components/ImageUploadForm";
 
 const ImagePost = () => {
@@ -13,6 +14,7 @@ const ImagePost = () => {
   return (
     <> 
     <div style={{marginTop:"100px"}}>
+      <Main/>
       <ModalBg onClick={goBack}/>
       <IconButton cancle/>
       <ImageUploadWrapper>
@@ -33,7 +35,7 @@ export default ImagePost;
 const ModalBg=styled.div`
 width:100%;
 height:100%;
-background:rgba(0,0,0,0.6);
+background:rgba(0,0,0,0.8);
 position:fixed;
 top:0;
 left:0;
