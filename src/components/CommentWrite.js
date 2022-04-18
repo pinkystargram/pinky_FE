@@ -5,14 +5,14 @@ import { Grid, Text, IconButton } from "../elements";
 import styled from "styled-components";
 import { _addCommentFX } from "../redux/modules/comments";
 
-const CommentsWrite = () => {
+const CommentsWrite = (props) => {
   const dispatch = useDispatch();
   const [comm, setComm] = useState("");
 
   const write = (e) => {
     setComm(e.target.value);
     console.log(comm);
-    dispatch(_addCommentFX(comm));
+    dispatch(_addCommentFX(props.id, comm));
     setComm("");
   };
 

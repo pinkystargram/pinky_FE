@@ -1,12 +1,26 @@
 import React from "react";
 import styled from "styled-components";
-import { IconButton } from "../elements/index";
+import { IconButton, Text, Grid } from "../elements/index";
 import Image from "../elements/Image";
 import logo from "../assets/logo.png";
 import { useHistory } from "react-router-dom";
 import MediaQuery, { useMediaQuery } from "react-responsive";
+import { _logoutFX } from "../redux/modules/user";
+import { useSelector, useDispatch } from "react-redux";
 
 const Header = () => {
+  const dispatch = useDispatch();
+  const [dropmenu, setDropmenu] = React.useState(false);
+
+  const dropToggle = () => {
+    return setDropmenu(!dropmenu);
+  };
+
+  const logOut = () => {
+    dropToggle();
+    dispatch(_logoutFX());
+  };
+
   const isPc = useMediaQuery({
     query: "(min-width : 1000px) and (max-width :1920px)",
   });
@@ -20,29 +34,56 @@ const Header = () => {
   };
 
   const goMypage = () => {
+    dropToggle();
     history.push("/MyPage");
   };
 
-  if (window.location.pathname === "/signup") return null;
-  if (window.location.pathname === "/login") return null;
+  const isLogin = useSelector((state) => state.user.is_login);
 
-  return (
-    <HeaderWrap>
-      <HeaderWrapper>
-        <img src={logo} onClick={goMain} style={{ cursor: "pointer" }} />
-        {isPc ? <SearchBar /> : null}
-        <IConBtns>
-          <IconButton home color="black" _onClick={goMain} />
-          <IconButton airplane color="black" />
-          <IconButton plusIcon _onClick={goWrite} color="black" />
-          <IconButton compass color="black" />
-          <IconButton unLikeIcon color="black" />
-          <Image imageType="circle" color="black" _onClick={goMypage} />
-        </IConBtns>
-      </HeaderWrapper>
-    </HeaderWrap>
-  );
+  if (isLogin) {
+    return (
+      <HeaderWrap>
+        <HeaderWrapper>
+          <img src={logo} onClick={goMain} style={{ cursor: "pointer" }} />
+          {isPc ? <SearchBar /> : null}
+          <IConBtns>
+            <IconButton home color="black" _onClick={goMain} />
+            <IconButton airplane color="black" />
+            <IconButton plusIcon _onClick={goWrite} color="black" />
+            <IconButton compass color="black" />
+            <IconButton unLikeIcon color="black" />
+
+            <Grid>
+              <Image
+                cursor="pointer"
+                imageType="circle"
+                color="black"
+                _onClick={dropToggle}
+              />
+              {dropmenu ? (
+                <DropContent>
+                  <Text _onClick={logOut}>로그아웃</Text>
+                  <Text _onClick={goMypage}>프로필</Text>
+                </DropContent>
+              ) : (
+                ""
+              )}
+            </Grid>
+          </IConBtns>
+        </HeaderWrapper>
+      </HeaderWrap>
+    );
+  }
+
+  return <></>;
 };
+
+const DropContent = styled.div`
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  z-index: 1;
+`;
 
 const HeaderWrap = styled.div`
   width: 100%;

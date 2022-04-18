@@ -49,7 +49,6 @@ api.interceptors.response.use(
       }
 
       if (response.data.reason === "리프레쉬 토큰까지 만료됐어요") {
-        window.alert(response.data.reason);
         deleteCookie("ACCESS_TOKEN");
         deleteCookie("REFRESH_TOKEN");
         history.push("/login");
@@ -58,11 +57,6 @@ api.interceptors.response.use(
     return Promise.reject(error);
   }
 );
-
-// const checkToken = async ({ atoken, rtoken }) => {
-//   const response = await api.get("/api/users/auth");
-//   return response;
-// };
 
 export const apis = {
   login: (email, password) =>
@@ -78,7 +72,7 @@ export const apis = {
   loginCheck: () => api.get("/api/users/auth"),
 
   //댓글
-  // getComment: (postId) => api.get(`/api/comment/${postId}`, {}),
+  getComment: (postId) => api.get(`/api/comment/${postId}`, {}),
 
   addComment: (postId, content) =>
     api.post(`/api/comments/${postId}`, { content: content }),

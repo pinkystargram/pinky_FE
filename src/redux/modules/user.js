@@ -69,7 +69,7 @@ export const _loginFX = (email, password) => {
             nickname: res.data.nickname,
           })
         );
-        window.location.replace("/");
+        history.push("/");
       })
 
       .catch((error) => {
@@ -181,8 +181,7 @@ export default handleActions(
       produce(state, (draft) => {
         console.log(state, draft, action.payload);
         draft.user = null;
-        draft.user.email = null;
-        draft.user.nickname = null;
+        draft.is_login = false;
       }),
   },
   initialState

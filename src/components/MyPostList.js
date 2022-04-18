@@ -1,10 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 import { Image, Grid, Text, IconButton } from "../elements";
+import { useDispatch, useSelector } from "react-redux";
+import { _logoutFX } from "../redux/modules/user";
 
 import MyPost from "./MyPost";
 
 const MyInfo = () => {
+  const dispatch = useDispatch();
+
   return (
     <>
       <Grid

@@ -1,11 +1,11 @@
-import { handleActions, createAction } from 'redux-actions';
-import {produce} from "immer";
-import { api } from '../../shared/Api';
+import { handleActions, createAction } from "redux-actions";
+import { produce } from "immer";
+import { api } from "../../shared/Api";
 
 //액션
 
-const ADD_POST = 'ADD_POST';
-const GET_POST = 'GET_POST';
+const ADD_POST = "ADD_POST";
+const GET_POST = "GET_POST";
 const DELETE_POST = "DELETE_POST";
 const EDIT_POST = "EDIT_POST";
 const GET_POSTONE="GET_POSTONE";
@@ -23,42 +23,45 @@ const getPost = createAction(GET_POST, (postList) => ({ postList }))
 const deletePost = createAction(DELETE_POST, (postId) => ({ postId }));
 const editPost = createAction(EDIT_POST, (postId) => ({ postId }));
 const getPostOne = createAction(GET_POSTONE, (post_one) => ({ post_one }));
-
-
 const addPostDB = (content = "", image="",location = "") => {
     return function (dispatch, getState, { history }) {
       const formData = new FormData();
       const config = {
+
+const addPostDB = (content = "", image = "", location = "") => {
+  return function (dispatch, getState, { history }) {
+    const formData = new FormData();
+    const config = {
       header: {
         "content-type": "multipart/form-data",
       },
     };
-    formData.append("content",content);
-    formData.append("image",image);
-    formData.append("location",location);
+    formData.append("content", content);
+    formData.append("image", image);
+    formData.append("location", location);
     api
-    .post("/api/posts",formData,config)
-    .then((res)=>{
-    history.replace("/")
-    console.log(res);
-    return;
-        })
-        .catch((err) => {
-          window.alert("포스트 작성 실패");
-        });
-    };
+      .post("/api/posts", formData, config)
+      .then((res) => {
+        history.replace("/");
+        console.log(res);
+        return;
+      })
+      .catch((err) => {
+        window.alert("포스트 작성 실패");
+      });
   };
+};
 
-  const getPostDB = () => {
-    return async function (dispatch, getState, { history }) {
-      try {
-        const { data } = await api.get("/api/posts");
-        dispatch(getPost(data));
-      } catch (error) {
-        alert("데이터를 불러오지 못했습니다");
-      }
-    };
+const getPostDB = () => {
+  return async function (dispatch, getState, { history }) {
+    try {
+      const { data } = await api.get("/api/posts");
+      dispatch(getPost(data));
+    } catch (error) {
+      console.log(error);
+    }
   };
+};
 
   const getPostOneDB = (postId) => {
     return async function (dispatch, getState, { history }) {
@@ -67,7 +70,7 @@ const addPostDB = (content = "", image="",location = "") => {
         console.log(data);
         dispatch(getPostOne(data));
       } catch (error) {
-        alert("데이터를 불러오지 못했습니다");
+        console.log(error);
       }
     };
   };
@@ -102,12 +105,9 @@ const addPostDB = (content = "", image="",location = "") => {
     };
   };
 
-
-
-
-
 //리듀서
-export default handleActions({
+export default handleActions(
+  {
     [ADD_POST]: (state, action) =>
       produce(state, (draft) => {
         draft.list.unshift(action.payload.post);
@@ -120,8 +120,6 @@ export default handleActions({
       produce(state, (draft) => {
         draft.target=action.payload.post_one;
       }),  
-
-
       
 }, initialState);
 
@@ -134,4 +132,5 @@ const actionCreators = {
     getPostOneDB,
   };
   
-  export { actionCreators };
+export { actionCreators };
+

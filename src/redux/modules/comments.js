@@ -4,9 +4,15 @@ import { produce } from "immer";
 import { handleActions } from "redux-actions";
 
 // Action
-const ADD_COMM = "comment/ADD_COMM";
+const ADD_COMM = "ADD_COMM";
+const GET_COMM = "GET_COMM";
 
 // Action creators
+export const getComm = (payload) => ({
+  type: GET_COMM,
+  payload,
+});
+
 export const addComm = (payload) => ({
   type: ADD_COMM,
   payload,
@@ -18,10 +24,19 @@ const initialState = {
 };
 
 // 미들웨어
-export const _addCommentFX = (content) => {
+// export const _getCommentFX = (openApiId) => {
+//   return async function (dispatch, getState) {
+//     api.
+//     } catch (error) {
+//       alert("댓글 가져오기 에러");
+//       console.log(error);
+//     }
+//   };
+// };
+
+export const _addCommentFX = (postId, content) => {
   return function (dispatch) {
-    const postId = "1";
-    console.log(content);
+    console.log(postId, content);
     api
       .post(`/api/comments/${postId}`, { content: content })
       .then((res) => {
