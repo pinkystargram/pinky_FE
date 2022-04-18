@@ -11,34 +11,38 @@ import CommentWrite from "../components/CommentWrite"
 import { actionCreators as postActions } from "../redux/modules/post";
 
 const Detail = (props) => {
+  const id = props.match.params.id;
+  React.useEffect(() => {
+    dispatch(postActions.getPostOneDB(id));
+  }, []);
+  const targetPostOne=useSelector((state)=>state.post.target?state.post.target:null);
   const dispatch=useDispatch();
   const history =useHistory();
   const postlist=useSelector((state)=>state.post.post)
-  const targetPostOne=useSelector((state)=>state.post.target.data);
+  
   console.log(targetPostOne);
-  const id = props.match.params.id;
   const targetPost=postlist.find((p)=>p.postId===id);
   const goBack=()=>{
     history.push("/");
   }
-
-  React.useEffect(() => {
-    dispatch(postActions.getPostOneDB(id));
-  }, []);
-
+  console.log(targetPostOne);
+  if (targetPostOne.length == 0) {
+    console.log("되라 제발");
+    return <></>;
+  }
   // const post_idx=post_list.findIndex(p=>p.id===id);
   return (
     <DetailWrapper>
       <ModalBg onClick={goBack} />
       <DetailModal>
         <ImageDiv>
-            <ImageContent src={targetPostOne.imageUrl}/>
+            <ImageContent src={targetPostOne.data.imageUrl}/>
         </ImageDiv>
         <ContentDiv>
           <PostHeader>
             <div style={{width:"90%",display:"flex",alignItems:"center"}} >
               <Image imageType ="circle"/>
-              <Text bold color="#323232" margin="10px">{targetPostOne.nickname}</Text>
+              <Text bold color="#323232" margin="10px">{targetPostOne.data.nickname}</Text>
             </div>
             <IconButton moreView size="16px" color="#323232" />
           </PostHeader>
@@ -46,9 +50,9 @@ const Detail = (props) => {
             <CommentList />
           </CommentListWrapper>
           <PostContentContent>
-            <Text bold >좋아요 {targetPostOne.likeCount}개</Text>
-            <Text size="14px" margin="-10px 0px 0px 0px">댓글 {targetPostOne.commentList.length}개 모두보기</Text>
-            <Text size="8px">{targetPostOne.updatedAt}</Text>
+            <Text bold >좋아요 {targetPostOne.data.likeCount}개</Text>
+            <Text size="14px" margin="-10px 0px 0px 0px">댓글{targetPostOne.data.commentList.length}개 모두보기</Text>
+            <Text size="8px">{targetPostOne.data.updatedAt}</Text>
             <Grid width="100%">
               <CommentWrite />
             </Grid>

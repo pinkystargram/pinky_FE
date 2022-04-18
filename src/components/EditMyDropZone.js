@@ -13,21 +13,26 @@ function EditMyDropzone(props) {
   React.useEffect(() => {
     dispatch(PostActions.getPostOneDB(id));
   }, []);
-  
+  const targetPostOne=useSelector((state)=>state.post.target?state.post.target:null);
   const dispatch = useDispatch();
   const history =useHistory();
   const userinfo=useSelector((state)=>state.user.user)
-//서버로 보낼 4가지 정보들?
-  const userId=useSelector((state)=>state.user.user.email?state.user.user.email:"userId@naver.com")
+//서버로 보낼 2가지 정보들?
   const [content, setContent] = React.useState("");
   const [location, setLocation] = React.useState("");
+
+  const userId=useSelector((state)=>state.user.user.email?state.user.user.email:"userId@naver.com")
+  
   const [imgFile, setImgFile] = useState(null);
   const [onfile,setOnfile]=useState(false);
   const [myFilename,setmyFilename]=useState("");
   const [isLoaded, setIsLoad] =useState(false);//
   const [imgBase64, setImgBase64] = useState(""); // 파일 base64
   const postlist=useSelector((state)=>state.post.post)
-  const targetPostOne=useSelector((state)=>state.post.target?state.post.target:null);
+  const editPost=()=>{
+    dispatch(PostActions.editPostDB(content,location));
+  }
+  
   console.log(targetPostOne);
   if (targetPostOne.length == 0) {
     console.log("되라 제발");
@@ -43,7 +48,7 @@ function EditMyDropzone(props) {
                   <Text bold margin="0px 50px 0px 0px">게시물 수정하기</Text>
                 </div> 
                 <div style={{position:"absolute", top:"0",right:"0",transform:"translate(-25%,-10%)"}}>
-                  <Text color="rgb(231, 38, 116)" bold cursor="pointer" >수정하기</Text>
+                  <Text color="rgb(231, 38, 116)" bold cursor="pointer" _onClick={editPost} >수정하기</Text>
                 </div>
             </div>
           </PostBoxTitle>
