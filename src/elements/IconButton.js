@@ -4,15 +4,15 @@ import { AiOutlineHeart, AiOutlineCheck, AiOutlineClose } from "react-icons/ai";
 import { BiArrowBack, BiMessageRounded } from "react-icons/bi";
 import { FaRegComment, FaRegCompass } from "react-icons/fa";
 import { FcLike } from "react-icons/fc";
-import { MdOutlineAddBox, MdOutlineAddAPhoto} from "react-icons/md";
+import { MdOutlineAddBox, MdOutlineAddAPhoto } from "react-icons/md";
 import { BsThreeDots } from "react-icons/bs";
 import { HiHome } from "react-icons/hi";
 import { AiFillFacebook } from "react-icons/ai";
 import { AiOutlineTable } from "react-icons/ai";
-import { GoLocation} from "react-icons/go";
+import { GoLocation } from "react-icons/go";
 import { IoPaperPlaneOutline, IoSettingsSharp } from "react-icons/io5";
 import { BsBookmark } from "react-icons/bs";
-
+import { CgSmile } from "react-icons/cg";
 
 const IconButton = (props) => {
   const {
@@ -41,6 +41,7 @@ const IconButton = (props) => {
     photo,
     location,
     setting,
+    smile,
   } = props;
 
   const styles = {
@@ -200,7 +201,10 @@ const IconButton = (props) => {
     return (
       <React.Fragment>
         <Icon {...styles}>
-          <MdOutlineAddAPhoto size={size} onClick={_onClick}></MdOutlineAddAPhoto>
+          <MdOutlineAddAPhoto
+            size={size}
+            onClick={_onClick}
+          ></MdOutlineAddAPhoto>
         </Icon>
       </React.Fragment>
     );
@@ -211,6 +215,16 @@ const IconButton = (props) => {
       <React.Fragment>
         <Icon {...styles}>
           <GoLocation size={size} onClick={_onClick}></GoLocation>
+        </Icon>
+      </React.Fragment>
+    );
+  }
+
+  if (smile) {
+    return (
+      <React.Fragment>
+        <Icon {...styles}>
+          <CgSmile size={size} onClick={_onClick}></CgSmile>
         </Icon>
       </React.Fragment>
     );

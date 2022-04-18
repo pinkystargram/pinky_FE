@@ -3,21 +3,26 @@ import styled from "styled-components";
 import Text from "../elements/Text";
 import IconButton from "../elements/IconButton";
 import Image from "../elements/Image";
-import {useHistory} from "react-router-dom";
+import { useHistory } from "react-router-dom";
+
+import CommentsWrite from "./CommentWrite";
+import { Grid } from "../elements";
 
 const Post = (props) => {
-  const history=useHistory();
-  const goDetail =()=>{
-    history.push("/Detail/:id")
-  }
+  const history = useHistory();
+  const goDetail = () => {
+    history.push("/Detail/:id");
+  };
   return (
     <PostContainer>
       <PostHeader>
-        <div style={{width:"90%",display:"flex",alignItems:"center"}} >
-          <Image imageType ="circle"/>
-          <Text bold color="#323232" margin="10px">{props.username}</Text>
+        <div style={{ width: "90%", display: "flex", alignItems: "center" }}>
+          <Image imageType="circle" />
+          <Text bold color="#323232" margin="10px">
+            {props.username}
+          </Text>
         </div>
-        <IconButton moreView size="16px" color="#323232"/>
+        <IconButton moreView size="16px" color="#323232" />
       </PostHeader>
           <Image shape="rectangle"  maxWidth="100%" height="400px"/>
         <PostContent width="100%">
@@ -36,9 +41,7 @@ const Post = (props) => {
           </PostContentContent>
         </PostContent>
     </PostContainer>
-  
-  )
-  ;
+  );
 };
 
 Post.defaultProps={

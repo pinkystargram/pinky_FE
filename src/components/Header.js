@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import {IconButton} from "../elements/index";
+import { IconButton } from "../elements/index";
 import Image from "../elements/Image";
 import logo from "../assets/logo.png";
 import {useHistory} from "react-router-dom";
@@ -15,10 +15,14 @@ const Header = () => {
   const history=useHistory();
   const goMain=()=>{
     history.push("/");
-  }
-  const goWrite =()=>{
+  };
+  const goWrite = () => {
     history.push("/ImagePost");
-  }
+  };
+
+  if (window.location.pathname === "/signup") return null;
+  if (window.location.pathname === "/login") return null;
+
   return (
       <HeaderWrap>
         <HeaderWrapper>
@@ -73,6 +77,5 @@ width:300px;
 justify-content:space-between;
 align-items:center;
 `
-
 
 export default Header;
