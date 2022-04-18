@@ -3,6 +3,8 @@ import styled from "styled-components";
 
 const Grid = (props) => {
   const {
+    _onMouseOver,
+    _onMouseOut,
     overflow,
     radius,
     display,
@@ -70,7 +72,12 @@ const Grid = (props) => {
 
   return (
     <>
-      <GridBox {...styles} onClick={_onClick}>
+      <GridBox
+        {...styles}
+        onClick={_onClick}
+        onMouseOver={_onMouseOver}
+        onMouseOut={_onMouseOut}
+      >
         {children}
       </GridBox>
     </>

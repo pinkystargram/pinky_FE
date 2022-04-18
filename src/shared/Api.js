@@ -42,4 +42,12 @@ export const apis = {
     }),
 
   loginCheck: () => api.get("/api/users/auth"),
+
+  //댓글
+  // getComment: (postId) => api.get(`/api/comment/${postId}`, {}),
+
+  addComment: (postId, content) =>
+    api.post(`/api/comments/${postId}`, { content: content }),
+
+  // deleteComment: (commentId) => api.delete(`/api/comment/${commentId}`, {}),
 };

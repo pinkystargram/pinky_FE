@@ -1,4 +1,3 @@
-import axios from "axios";
 import { apis } from "../../shared/Api";
 import { produce } from "immer";
 import { deleteCookie, getCookie, setCookie } from "../../shared/Cookie";

@@ -1,130 +1,81 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Grid, Input, Button } from "../elements";
-import comment, {
-  getCommentAX,
-  postCommentAX,
-  deleteCommentAX,
-  updateCommentAX,
-  isEdit,
-} from "../redux/modules/comment";
-
-import { FaRegEdit, FaTrashAlt } from "react-icons/fa";
-import { BiXCircle } from "react-icons/bi";
-
+import {} from "react-icons";
+import { Grid, Text, IconButton } from "../elements";
 import styled from "styled-components";
-import { useParams } from "react-router-dom";
-import card from "../redux/modules/card";
-import Permit from "../Permit";
+import { _addCommentFX } from "../redux/modules/comments";
 
-const Comments = () => {
+const CommentsWrite = () => {
   const dispatch = useDispatch();
   const [comm, setComm] = useState("");
-  const [newComm, setNewComm] = useState("");
 
-  const comment_list = useSelector((state) => state.comment);
-  const state = useSelector((state) => state);
-  const params = useParams();
-  console.log(comment_list);
-  console.log(params);
-
-  const is_login = localStorage.getItem("is_login");
-  const username = localStorage.getItem("username");
-
-  const toggleEditing = (commentId) => {
-    dispatch(isEdit(commentId));
+  const write = (e) => {
+    setComm(e.target.value);
+    console.log(comm);
+    dispatch(_addCommentFX(e.target.value));
+    setComm("");
   };
 
-  useEffect(() => {
-    dispatch(getCommentAX(params.openApiId));
-  }, []);
+  const nickname = localStorage.getItem("nickname");
 
   return (
-    <>
-      <CommWrap>
-        <CommentInput
-          onChange={(e) => setComm(e.target.value)}
-          placeholder="댓글 입력"
-        />
-
-        <CommentBtn
-          onClick={() => {
-            console.log(params.openApiId);
-            dispatch(postCommentAX(comm, params.openApiId));
-          }}
+    <Grid
+      margin="0"
+      padding="0 5px"
+      borderTop="1px solid #e4e4e4"
+      display="flex"
+      justifyContent="flex-start"
+      alignItems="center"
+    >
+      <IconButton
+        smile
+        margin="5px 8px 0 0"
+        size="30"
+        height="30"
+        color="#414141"
+      />
+      <CommentInput
+        type="text"
+        placeholder="댓글 달기.."
+        value={comm}
+        onChange={(e) => {
+          setComm(e.target.value);
+        }}
+        onSubmit={write}
+      ></CommentInput>
+      {comm.length > 0 ? (
+        <Text
+          _onClick={write}
+          bold
+          color="#e72674"
+          margin="13px 5px"
+          cursor="pointer"
+          size="15px"
         >
-          댓글 등록
-        </CommentBtn>
-      </CommWrap>
-    </>
+          게시
+        </Text>
+      ) : (
+        <Text size="15px" bold color="#F2A6C5" margin="13px 5px">
+          게시
+        </Text>
+      )}
+    </Grid>
   );
 };
 
-const CommWrap = styled.div`
-  display: flex;
-  justify-content: center;
-  box-sizing: border-box;
-  vertical-align: middle;
-`;
-
-const CommentInput = styled.input`
-  border-radius: 0;
-  border: 1px solid #d7d8d9;
-  width: 400px;
-  height: 30px;
-  border: 1px solid #007356;
-  :focus {
-    outline: 1px solid #007356;
-  }
-`;
-
-const CommentBtn = styled.button`
+const CommentInput = styled.textarea`
+  margin: 0;
   border: none;
-  background-color: #007356;
-  width: 80px;
-  height: 35px;
-  cursor: pointer;
-  color: white;
-  margin-left: 10px;
-  :hover {
-    box-shadow: 0 0 4px black;
-    font-weight: 900;
-  }
-`;
-const EditBox = styled.div`
-  display: flex;
-  margin: 10px auto;
-  width: 500px;
-  align-items: center;
-  height: 95.8px;
-`;
-
-const EditInput = styled.input`
-  border-radius: 0;
-  border: 1px solid #d7d8d9;
-  width: 400px;
-  height: 40px;
+  padding: 10px;
+  min-width: 520px;
+  height: 34px;
+  outline: none;
+  resize: none;
   box-sizing: border-box;
-  :focus {
-    outline: 1px solid #f49b26;
+  overflow: hidden;
+  ::placeholder {
+    color: #aeaeae;
   }
 `;
 
-const EditBtn = styled.button`
-  border: none;
-  border-radius: 5px;
-  margin-right: 10px;
-  background-color: #f49b26;
-  width: 80px;
-  height: 30px;
-  cursor: pointer;
-  color: white;
-  margin-left: 10px;
-  box-sizing: border-box;
-  :hover {
-    box-shadow: 0 0 4px black;
-    font-weight: 700;
-  }
-`;
-
-export default Comments;
+export default CommentsWrite;
