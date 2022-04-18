@@ -57,7 +57,7 @@ const Image = (props) => {
 
   // 원형 이미지 : 프로필 사진, 스토리 사진 쓸때
   if (imageType === "circle") {
-    return <ImageCircle {...styles}></ImageCircle>;
+    return <ImageCircle {...styles} onClick={_onClick}></ImageCircle>;
   }
 
   // 게시물 이미지 쓸때

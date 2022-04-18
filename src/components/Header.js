@@ -20,7 +20,7 @@ const Header = () => {
   };
 
   const goMypage = () => {
-    history.push("/mypage");
+    history.push("/MyPage");
   };
 
   if (window.location.pathname === "/signup") return null;
