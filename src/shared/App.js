@@ -13,10 +13,10 @@ import Login from "../pages/Login";
 import Signup from "../pages/Signup";
 import Detail from "../pages/Detail";
 import Main from "../pages/Main";
-import WritePost from "../pages/WritePost";
 import ImagePost from "../pages/ImagePost";
 import MyPage from "../pages/MyPage";
 import Header from "../components/Header";
+// import ImageFilterEx from "../components/ImageFilterEx";
 
 function App() {
   const dispatch = useDispatch();
@@ -32,10 +32,10 @@ function App() {
     <React.Fragment>
       <ConnectedRouter history={history}>
         <Header></Header>
+        {/* <Route path ="/imagefilter" exact component={ImageFilterEx}/> */}
         <Route path="/" exact component={Main} />
         <Route path="/login" exact component={Login} />
         <Route path="/signup" exact component={Signup} />
-        <Route path="/WritePost" exact component={WritePost} />
         <Route path="/ImagePost" exact component={ImagePost} />
         <Route path="/MyPage" exact component={MyPage} />
         <Route path="/Detail/:id" exact component={Detail} />

@@ -2,18 +2,20 @@ import React from "react";
 import styled from "styled-components";
 import Image from "../elements/Image";
 import Text from "../elements/Text";
+import {useSelector} from "react-redux";
 
 const RecommendItem =(props)=>{
 
+    
 
     return(
         <React.Fragment>
             <RecommendBox>
-                <div style={{width:"89%",display:"flex"}}>
+                <div style={{width:"86%",display:"flex"}}>
                     <Image imageType ="circle" margin="0px 10px 0px 0px"/>
-                    <Text bold size="12px">qpinky12</Text>
+                    <Text bold size="12px">다른사람의 아이디값</Text>
                 </div>
-                <Text color="#29c5f6" size="10px" bold >팔로우</Text>
+                <Text color="rgb(231, 38, 116)" size="12px" bold>팔로우</Text>
             </RecommendBox>
 
             

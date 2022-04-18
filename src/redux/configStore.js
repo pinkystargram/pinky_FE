@@ -1,14 +1,14 @@
 //configStore.js
 import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
-import Image from "./modules/image";
+import Image from "react"
 import Comments from "./modules/comments";
 import User from "./modules/user";
 import Mypage from "./modules/mypage";
 import Post from "./modules/post";
-
 import { createBrowserHistory } from "history";
 import { connectRouter } from "connected-react-router";
+
 
 export const history = createBrowserHistory();
 
