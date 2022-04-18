@@ -5,24 +5,19 @@ import { api } from '../../shared/Api';
 //액션
 
 const ADD_POST = 'ADD_POST';
-
+const GET_POST = 'GET_POST';
 
 
 //initialState
 const initialState = {
-    post:{
-        userId:"skdmflks",
-        content:"안녕하세요",
-        image:null,
-        location:"서울 용산구"
-    }
+    post:[]
 }
 
 
 //액션생성함수
 
 const addPost = createAction(ADD_POST, (postData) => ({ postData }))
-
+const getPost = createAction(GET_POST, (postList) => ({ postList }))
 
 //미들웨어
 //  const onDrop = useCallback(async acceptedFiles => {
@@ -41,7 +36,7 @@ const addPost = createAction(ADD_POST, (postData) => ({ postData }))
 //       console.log(res);
 //     }); 
 //   }, [])
-const addPostDB = (userId="",content = "", location = "", image="", ) => {
+const addPostDB = (content = "", image="",location = "") => {
     return function (dispatch, getState, { history }) {
       const formData = new FormData();
       const config = {
@@ -49,23 +44,34 @@ const addPostDB = (userId="",content = "", location = "", image="", ) => {
         "content-type": "multipart/form-data",
       },
     };
-    formData.append(userId);
-    formData.append(content);
-    formData.append(location);
-    formData.append(image);
+    formData.append("content",content);
+    formData.append("image",image);
+    formData.append("location",location);
     api
-    .post("/sdflsk",formData,config)
+    .post("/api/posts",formData,config)
     .then((res)=>{
+    history.replace("/")
     console.log(res);
     return;
-       
-          
         })
         .catch((err) => {
           window.alert("포스트 작성 실패");
         });
     };
   };
+
+  const getPostDB = () => {
+    return async function (dispatch, getState, { history }) {
+      try {
+        const { data } = await api.get("/api/posts");
+        dispatch(getPost(data));
+      } catch (error) {
+        alert("데이터를 불러오지 못했습니다");
+      }
+    };
+  };
+
+
 
 
 //리듀서
@@ -74,11 +80,20 @@ export default handleActions({
       produce(state, (draft) => {
         draft.list.unshift(action.payload.post);
       }),
+    [GET_POST]: (state, action) =>
+      produce(state, (draft) => {
+        draft.post=action.payload.postList.data;
+        console.log(draft.post)
+      }),
+
+
+      
 }, initialState);
 
 const actionCreators = {
     addPost,
     addPostDB,
+    getPostDB,
   };
   
   export { actionCreators };

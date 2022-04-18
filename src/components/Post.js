@@ -4,14 +4,15 @@ import Text from "../elements/Text";
 import IconButton from "../elements/IconButton";
 import Image from "../elements/Image";
 import { useHistory } from "react-router-dom";
-
+import { actionCreators as postActions } from "../redux/modules/post";
 import CommentsWrite from "./CommentWrite";
 import { Grid } from "../elements";
 
 const Post = (props) => {
+  const id=props.postId;
   const history = useHistory();
   const goDetail = () => {
-    history.push("/Detail/:id");
+    history.push(`/post/${id}`);
   };
   return (
     <PostContainer>
@@ -19,12 +20,12 @@ const Post = (props) => {
         <div style={{ width: "90%", display: "flex", alignItems: "center" }}>
           <Image imageType="circle" />
           <Text bold color="#323232" margin="10px">
-            {props.username}
+            {props.nickname}
           </Text>
         </div>
         <IconButton moreView size="16px" color="#323232" />
       </PostHeader>
-      <Image shape="rectangle" maxWidth="100%" height="400px" />
+      <img src={props.imageUrl} style={{ maxWidth:"100%",width:"auto",objectFit:"cover" }} />
       <PostContent width="100%">
         <PostContentHeader>
           <div
@@ -41,16 +42,20 @@ const Post = (props) => {
           <IconButton bookmark />
         </PostContentHeader>
         <PostContentContent>
-          <Text bold>좋아요 {props.likeCnt}개</Text>
+          <Text bold margin="10px 0px -10px 0px">좋아요 {props.likeCount}개</Text>
+          <div style={{display:"flex",alignItems:"center"}}>
+            <Text bold margin="2px">{props.nickname}</Text>
+            <Text margin="2x">{props.content}</Text>
+          </div>
           <Text
             size="14px"
             margin="-10px 0px 0px 0px"
             _onClick={goDetail}
             cursor="pointer"
           >
-            댓글 {props.commentCnt}개 모두보기
+            댓글 {props.commentCount}개 모두보기
           </Text>
-          <Text size="8px">3일전</Text>
+          <Text size="8px">{props.updatedAt}</Text>
         </PostContentContent>
         <Grid>
           <CommentsWrite />
@@ -60,12 +65,6 @@ const Post = (props) => {
   );
 };
 
-Post.defaultProps = {
-  username: "qpinky12",
-  likeCnt: 27,
-  commentCnt: 58089,
-  insert_dt: "2021-01-01 11:11",
-};
 
 const PostContainer = styled.div`
   width: 100%;

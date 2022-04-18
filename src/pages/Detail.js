@@ -5,10 +5,16 @@ import Text from "../elements/Text";
 import IconButton from "../elements/IconButton";
 import CommentList from "../components/CommentList";
 import { useHistory } from "react-router-dom";
+import {useDispatch,useSelector} from "react-redux";
 
 const Detail = (props) => {
   const history =useHistory();
+  const postlist=useSelector((state)=>state.post.post)
   const id = props.match.params.id;
+  const targetPost=postlist.find((p)=>p.postId===id);
+  console.log(id)
+  console.log(targetPost);
+
   const goBack=()=>{
     history.push("/");
   }
@@ -18,15 +24,15 @@ const Detail = (props) => {
       <ModalBg onClick={goBack}/>
       <DetailModal>
         <ImageDiv>
-          <div style={{marginTop:"50px"}}> 
-            <Image imageType="rectangle"/>
-          </div>
+          
+            <ImageContent src={targetPost.imageUrl}/>
+
         </ImageDiv>
         <ContentDiv>
           <PostHeader>
             <div style={{width:"90%",display:"flex",alignItems:"center"}} >
               <Image imageType ="circle"/>
-              <Text bold color="#323232" margin="10px">{props.username}</Text>
+              <Text bold color="#323232" margin="10px">{targetPost.nickname}</Text>
             </div>
             <IconButton moreView size="16px" color="#323232"/>
           </PostHeader>
@@ -34,9 +40,9 @@ const Detail = (props) => {
             <CommentList/>
           </CommentListWrapper>
           <PostContentContent>
-            <Text bold >좋아요 {props.likeCnt}개</Text>
-            <Text size="14px" margin="-10px 0px 0px 0px">댓글 {props.commentCnt}개 모두보기</Text>
-            <Text size="8px">3일전</Text>
+            <Text bold >좋아요 {targetPost.likeCount}개</Text>
+            <Text size="14px" margin="-10px 0px 0px 0px">댓글 {targetPost.commentCount}개 모두보기</Text>
+            <Text size="8px">{targetPost.updatedAt}</Text>
           </PostContentContent>
         </ContentDiv>
       </DetailModal>
@@ -48,11 +54,6 @@ const Detail = (props) => {
     </DetailWrapper>);
 };
 
-Detail.defaultProps={
-  username:"sdfwkj_s311",
-  commentCnt:234,
-  likeCnt:23940,
-}
 
 const DetailWrapper=styled.div`
 width:100%;
@@ -85,6 +86,8 @@ width:50%;
 height:600px;
 background:black;
 z-index:4;
+overflow:hidden;
+line-height:600px;
 `
 
 const ContentDiv=styled.div`
@@ -94,7 +97,11 @@ background:white;
 z-index:4;
 float:left;
 `
-
+const ImageContent=styled.img`
+width:100%;
+height:auto;
+vertical-align:middle;
+`
 const CommentListWrapper=styled.div`
 height:600px;
 overflow-y:scroll;

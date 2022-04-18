@@ -18,14 +18,14 @@ function MyDropzone() {
   const [location, setLocation] = React.useState("");
   const [imgFile, setImgFile] = useState(null);
 
-  console.log(userId,content,location,imgFile);
+  console.log(content,location,imgFile);
   const [onfile,setOnfile]=useState(false);
   const [myFilename,setmyFilename]=useState("");
   const [isLoaded, setIsLoad] =useState(false);//
   const [imgBase64, setImgBase64] = useState(""); // 파일 base64
   
   const addpost=()=>{
-    dispatch(PostActions.addPostDB(userId,content,location,imgFile))
+    dispatch(PostActions.addPostDB(content,imgFile,location))
   }
 
 

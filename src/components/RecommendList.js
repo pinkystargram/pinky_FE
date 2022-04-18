@@ -9,7 +9,6 @@ const RecommendList =(props)=>{
 const userId=useSelector((state)=>state.user.user.email?state.user.user.email:"userId@naver.com")
 const nickname=useSelector((state)=>state.user.user.nickname?state.user.user.nickname:"nickname")
 
-
     return(
         <>
         <MyProfile>
