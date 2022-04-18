@@ -1,12 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-import MyDropzone from "../components/MyDropZone";
+import EditMyDropzone from "../components/EditMyDropZone";
 import { IconButton } from "../elements";
 import {useHistory} from "react-router-dom";
-import Main from "../pages/Main"
+import Main from "./Main"
 import ImageUploadForm from "../components/ImageUploadForm";
 
-const ImagePost = (props) => {
+const EditPost = (props) => {
   const history =useHistory();
   const id = props.match.params.id;
   console.log(id);
@@ -20,7 +20,7 @@ const ImagePost = (props) => {
       <ModalBg onClick={goBack}/>
       <IconButton cancle/>
       <ImageUploadWrapper>
-      <MyDropzone></MyDropzone>
+      <EditMyDropzone id={id}></EditMyDropzone>
       </ImageUploadWrapper>
       <div style={{position:"absolute", top:"10px",right:"10px",zIndex:"10"}}>
       <IconButton cancle color="white" _onClick={goBack}/>
@@ -31,7 +31,7 @@ const ImagePost = (props) => {
   )
 };
 
-export default ImagePost;
+export default EditPost;
 
 
 const ModalBg=styled.div`

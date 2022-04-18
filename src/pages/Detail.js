@@ -6,37 +6,39 @@ import { Grid } from "../elements";
 import IconButton from "../elements/IconButton";
 import CommentList from "../components/CommentList";
 import { useHistory } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import CommentWrite from "../components/CommentWrite";
+import {useDispatch,useSelector} from "react-redux";
+import CommentWrite from "../components/CommentWrite"
+import { actionCreators as postActions } from "../redux/modules/post";
 
 const Detail = (props) => {
-  const history = useHistory();
-  const postlist = useSelector((state) => state.post.post);
+  const dispatch=useDispatch();
+  const history =useHistory();
+  const postlist=useSelector((state)=>state.post.post)
+  const targetPostOne=useSelector((state)=>state.post.target.data);
+  console.log(targetPostOne);
   const id = props.match.params.id;
-  const targetPost = postlist.find((p) => p.postId === id);
-  console.log(id);
-  console.log(targetPost);
-
-  const goBack = () => {
+  const targetPost=postlist.find((p)=>p.postId===id);
+  const goBack=()=>{
     history.push("/");
-  };
+  }
+
+  React.useEffect(() => {
+    dispatch(postActions.getPostOneDB(id));
+  }, []);
+
   // const post_idx=post_list.findIndex(p=>p.id===id);
   return (
     <DetailWrapper>
       <ModalBg onClick={goBack} />
       <DetailModal>
         <ImageDiv>
-          <ImageContent src={targetPost.imageUrl} />
+            <ImageContent src={targetPostOne.imageUrl}/>
         </ImageDiv>
         <ContentDiv>
           <PostHeader>
-            <div
-              style={{ width: "90%", display: "flex", alignItems: "center" }}
-            >
-              <Image imageType="circle" />
-              <Text bold color="#323232" margin="10px">
-                {targetPost.nickname}
-              </Text>
+            <div style={{width:"90%",display:"flex",alignItems:"center"}} >
+              <Image imageType ="circle"/>
+              <Text bold color="#323232" margin="10px">{targetPostOne.nickname}</Text>
             </div>
             <IconButton moreView size="16px" color="#323232" />
           </PostHeader>
@@ -44,11 +46,9 @@ const Detail = (props) => {
             <CommentList />
           </CommentListWrapper>
           <PostContentContent>
-            <Text bold>좋아요 {targetPost.likeCount}개</Text>
-            <Text size="14px" margin="-10px 0px 0px 0px">
-              댓글 {targetPost.commentCount}개 모두보기
-            </Text>
-            <Text size="8px">{targetPost.updatedAt}</Text>
+            <Text bold >좋아요 {targetPostOne.likeCount}개</Text>
+            <Text size="14px" margin="-10px 0px 0px 0px">댓글 {targetPostOne.commentList.length}개 모두보기</Text>
+            <Text size="8px">{targetPostOne.updatedAt}</Text>
             <Grid width="100%">
               <CommentWrite />
             </Grid>
