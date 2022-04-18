@@ -23,10 +23,7 @@ const getPost = createAction(GET_POST, (postList) => ({ postList }))
 const deletePost = createAction(DELETE_POST, (postId) => ({ postId }));
 const editPost = createAction(EDIT_POST, (postId) => ({ postId }));
 const getPostOne = createAction(GET_POSTONE, (post_one) => ({ post_one }));
-const addPostDB = (content = "", image="",location = "") => {
-    return function (dispatch, getState, { history }) {
-      const formData = new FormData();
-      const config = {
+
 
 const addPostDB = (content = "", image = "", location = "") => {
   return function (dispatch, getState, { history }) {
@@ -67,7 +64,6 @@ const getPostDB = () => {
     return async function (dispatch, getState, { history }) {
       try {
         const { data } = await api.get(`/api/posts/${postId}`,postId);
-        console.log(data);
         dispatch(getPostOne(data));
       } catch (error) {
         console.log(error);
@@ -90,12 +86,13 @@ const getPostDB = () => {
     };
   };
 
-  const editPostDB = (postId,content) => {
+  const editPostDB = (postId="",content="",location="") => {
     return function (dispatch, getState, { history }) {
       api
-        .patch(`/api/posts/${postId}`,postId,content)
+        .patch(`/api/posts/${postId}`,content,location)
         .then(function (response) {
           console.log(response);
+          return
           history.replace("/");
           window.location.reload();
         })
