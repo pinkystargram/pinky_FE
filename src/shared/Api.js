@@ -1,8 +1,6 @@
 import axios from "axios";
 import { deleteCookie, getCookie, setCookie } from "./Cookie";
-
-const tokencheck = document.cookie;
-const token = tokencheck.split("=")[1];
+import { history } from "../redux/configStore";
 
 export const api = axios.create({
   // 실제 베이스 유알엘
@@ -34,30 +32,37 @@ api.interceptors.response.use(
     return response;
   },
   async (error) => {
-    const { res, config } = error;
+    const {
+      config,
+      response: { status },
+      response,
+    } = error;
+
     const originalRequest = config;
-    if (res.status === 401) {
-      if (res.data.atoken) {
-        setCookie("ACCESS_TOKEN", res.data.atoken, 1);
 
-        originalRequest.headers.authorization = `Bearer ${res.data.atoken}`;
+    if (status === 401) {
+      if (response.data.atoken) {
+        console.log(response);
+        setCookie("ACCESS_TOKEN", response.data.atoken);
+        originalRequest.headers.Authorization = `Bearer ${response.data.atoken}`;
+        return axios(originalRequest);
       }
-      return axios(originalRequest);
-    }
 
-    if (res.status === 403) {
-      if (res.data.message === "로그인을 다시 해주세요?") {
+      if (response.data.reason === "리프레쉬 토큰까지 만료됐어요") {
+        window.alert(response.data.reason);
         deleteCookie("ACCESS_TOKEN");
         deleteCookie("REFRESH_TOKEN");
-
-        return;
+        history.push("/login");
       }
-      return axios(originalRequest);
     }
-
     return Promise.reject(error);
   }
 );
+
+// const checkToken = async ({ atoken, rtoken }) => {
+//   const response = await api.get("/api/users/auth");
+//   return response;
+// };
 
 export const apis = {
   login: (email, password) =>

@@ -113,7 +113,7 @@ export const _loginCheckFX = () => {
         })
         .catch((error) => {
           console.log(error);
-          // window.alert(error.message);
+          window.alert("로그인 시간이 만료되었습니다.");
           history.push("/login");
         });
     }
@@ -139,7 +139,7 @@ export const _loginCheckFX = () => {
 //           if (res.data.atoken) {
 //             setCookie("ACCESS_TOKEN", res.data.atoken, 1);
 
-//             localStorage.setItem("nickname", res.data.nickname);
+//             // localStorage.setItem("nickname", res.data.nickname);
 
 //             dispatch(
 //               logIn({
@@ -151,7 +151,7 @@ export const _loginCheckFX = () => {
 //         })
 //         .catch((error) => {
 //           console.log(error);
-//           window.alert(error.message);
+//           window.alert("로그인 시간이 만료되었습니다.");
 //           history.push("/login");
 //         });
 //     }
