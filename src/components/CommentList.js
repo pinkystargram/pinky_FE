@@ -10,6 +10,11 @@ const CommentList = () => {
       <CommentItem />
       <CommentItem />
       <CommentItem />
+      <CommentItem />
+      <CommentItem />
+      <CommentItem />
+      <CommentItem />
+      <CommentItem />
     </CommentWrapper>
   );
 };

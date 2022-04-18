@@ -59,7 +59,8 @@ export const _loginFX = (email, password) => {
 
         setCookie("ACCESS_TOKEN", res.data.atoken, 1);
         setCookie("REFRESH_TOKEN", res.data.rtoken, 1);
-        localStorage.setItem("nickname", res.data.nickname);
+        // localStorage.setItem("nickname", res.data.nickname);
+        // localStorage.setItem("email", res.data.email);
         // localStorage.setItem("is_login", true);
 
         dispatch(
@@ -68,7 +69,7 @@ export const _loginFX = (email, password) => {
             nickname: res.data.nickname,
           })
         );
-        history.replace("/");
+        window.location.replace("/");
       })
 
       .catch((error) => {
@@ -76,6 +77,21 @@ export const _loginFX = (email, password) => {
       });
   };
 };
+
+// export const _loginCheckFX = () => {
+//   return function (dispatch, getState, { history }) {
+//     const nickname = localStorage.getItem("username");
+//     const email = localStorage.getItem("email");
+//     const atoken = getCookie("ACCESS_TOKEN");
+//     const rtoken = getCookie("REFRESH_TOKEN");
+
+//     if ((atoken, rtoken)) {
+//       dispatch(logIn({ email: email, nickname: nickname }));
+//     } else {
+//       dispatch(logOut());
+//     }
+//   };
+// };
 
 export const _loginCheckFX = () => {
   return function (dispatch, getState, { history }) {
@@ -88,38 +104,65 @@ export const _loginCheckFX = () => {
         .then((res) => {
           console.log(res);
 
-          if (res.data.result === false) {
-            window.alert(res.data.message);
-            return dispatch(_logoutFX());
-          }
-
-          if (res.data.atoken) {
-            setCookie("ACCESS_TOKEN", res.data.atoken, 1);
-
-            localStorage.setItem("nickname", res.data.nickname);
-
-            dispatch(
-              logIn({
-                email: res.data.email,
-                nickname: res.data.nickname,
-              })
-            );
-          }
+          dispatch(
+            logIn({
+              email: res.data.email,
+              nickname: res.data.nickname,
+            })
+          );
         })
         .catch((error) => {
           console.log(error);
-          window.alert(error.message);
+          // window.alert(error.message);
           history.push("/login");
         });
     }
   };
 };
 
+// export const _loginCheckFX = () => {
+//   return function (dispatch, getState, { history }) {
+//     const atoken = getCookie("ACCESS_TOKEN");
+//     const rtoken = getCookie("REFRESH_TOKEN");
+
+//     if ((atoken, rtoken)) {
+//       apis
+//         .loginCheck()
+//         .then((res) => {
+//           console.log(res);
+
+//           if (res.data.result === false) {
+//             window.alert(res.data.message);
+//             return dispatch(_logoutFX());
+//           }
+
+//           if (res.data.atoken) {
+//             setCookie("ACCESS_TOKEN", res.data.atoken, 1);
+
+//             localStorage.setItem("nickname", res.data.nickname);
+
+//             dispatch(
+//               logIn({
+//                 email: res.data.email,
+//                 nickname: res.data.nickname,
+//               })
+//             );
+//           }
+//         })
+//         .catch((error) => {
+//           console.log(error);
+//           window.alert(error.message);
+//           history.push("/login");
+//         });
+//     }
+//   };
+// };
+
 export const _logoutFX = () => {
   return function (dispatch, getState, { history }) {
     deleteCookie("ACCESS_TOKEN");
     deleteCookie("REFRESH_TOKEN");
-    localStorage.removeItem("nickname");
+
     dispatch(logOut());
     history.replace("/login");
   };
