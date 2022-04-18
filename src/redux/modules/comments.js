@@ -1,4 +1,5 @@
 import { apis } from "../../shared/Api";
+import { api } from "../../shared/Api";
 import { produce } from "immer";
 import { handleActions } from "redux-actions";
 
@@ -17,10 +18,12 @@ const initialState = {
 };
 
 // 미들웨어
-export const _addCommentFX = (postId, content) => {
+export const _addCommentFX = (content) => {
   return function (dispatch) {
-    apis
-      .addComment(postId, content)
+    const postId = "1";
+    console.log(content);
+    api
+      .post(`/api/comments/${postId}`, { content: content })
       .then((res) => {
         console.log(res);
         alert("댓글달기 성공!");

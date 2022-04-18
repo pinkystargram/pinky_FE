@@ -12,7 +12,7 @@ const CommentsWrite = () => {
   const write = (e) => {
     setComm(e.target.value);
     console.log(comm);
-    dispatch(_addCommentFX(e.target.value));
+    dispatch(_addCommentFX(comm));
     setComm("");
   };
 
@@ -67,7 +67,7 @@ const CommentInput = styled.textarea`
   margin: 0;
   border: none;
   padding: 10px;
-  min-width: 520px;
+  min-width: 610px;
   height: 34px;
   outline: none;
   resize: none;

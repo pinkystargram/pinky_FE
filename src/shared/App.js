@@ -7,7 +7,7 @@ import { ConnectedRouter } from "connected-react-router";
 import { history } from "../redux/configStore";
 import { useDispatch } from "react-redux";
 
-import { _loginCheckFX } from "../redux/modules/user";
+import { _loginCheckFX, logIn } from "../redux/modules/user";
 
 import Login from "../pages/Login";
 import Signup from "../pages/Signup";
@@ -24,7 +24,6 @@ function App() {
   useEffect(() => {
     if (document.cookie) {
       dispatch(_loginCheckFX());
-      // dispatch(setPostDB());
     }
   }, []);
 

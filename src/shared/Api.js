@@ -10,7 +10,6 @@ export const api = axios.create({
   headers: {
     "content-type": "application/json;charset=UTF-8",
     accept: "application/json",
-    token: token,
   },
 });
 
@@ -29,6 +28,36 @@ api.interceptors.request.use((config) => {
 
   return config;
 });
+
+api.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  async (error) => {
+    const { res, config } = error;
+    const originalRequest = config;
+    if (res.status === 401) {
+      if (res.data.atoken) {
+        setCookie("ACCESS_TOKEN", res.data.atoken, 1);
+
+        originalRequest.headers.authorization = `Bearer ${res.data.atoken}`;
+      }
+      return axios(originalRequest);
+    }
+
+    if (res.status === 403) {
+      if (res.data.message === "로그인을 다시 해주세요?") {
+        deleteCookie("ACCESS_TOKEN");
+        deleteCookie("REFRESH_TOKEN");
+
+        return;
+      }
+      return axios(originalRequest);
+    }
+
+    return Promise.reject(error);
+  }
+);
 
 export const apis = {
   login: (email, password) =>
