@@ -14,8 +14,13 @@ const Header = () => {
   const goMain = () => {
     history.push("/");
   };
+
   const goWrite = () => {
     history.push("/ImagePost");
+  };
+
+  const goMypage = () => {
+    history.push("/mypage");
   };
 
   if (window.location.pathname === "/signup") return null;
@@ -32,7 +37,7 @@ const Header = () => {
           <IconButton plusIcon _onClick={goWrite} color="black" />
           <IconButton compass color="black" />
           <IconButton unLikeIcon color="black" />
-          <Image imageType="circle" color="black" />
+          <Image imageType="circle" color="black" _onClick={goMypage} />
         </IConBtns>
       </HeaderWrapper>
     </HeaderWrap>
