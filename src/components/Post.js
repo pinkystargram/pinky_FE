@@ -16,7 +16,7 @@ const Post = (props) => {
     history.push(`/post/${id}`);
   };
   const modalUp=()=>{
-      setMenu(true)
+      setMenu(true);
   }
   const modalDown=()=>{
       setMenu(false);
@@ -25,9 +25,9 @@ const Post = (props) => {
     console.log("지금부터 삭제를 시작한다")
     dispatch(postActions.deletePostDB(id));
   }
-
+  
   const editPost=()=>{
-    console.log("지금부터 수정을 시작한다")
+    history.push(`/edit/${id}`);
   }
 
   return (

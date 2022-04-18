@@ -7,36 +7,24 @@ import { api } from '../../shared/Api';
 const ADD_POST = 'ADD_POST';
 const GET_POST = 'GET_POST';
 const DELETE_POST = "DELETE_POST";
+const EDIT_POST = "EDIT_POST";
+const GET_POSTONE="GET_POSTONE";
+
 
 //initialState
 const initialState = {
-    post:[]
+    post:[],
+    target:[]
 }
 
-
 //액션생성함수
-
 const addPost = createAction(ADD_POST, (postData) => ({ postData }))
 const getPost = createAction(GET_POST, (postList) => ({ postList }))
 const deletePost = createAction(DELETE_POST, (postId) => ({ postId }));
+const editPost = createAction(EDIT_POST, (postId) => ({ postId }));
+const getPostOne = createAction(GET_POSTONE, (post_one) => ({ post_one }));
 
-//미들웨어
-//  const onDrop = useCallback(async acceptedFiles => {
-//     const myFile=acceptedFiles[0];
-//     console.log(myFile);
-//     return;
-//     const formData = new FormData();
-//     const config = {
-//       header: {
-//         "content-type": "multipart/form-data",
-//       },
-//     };
-//     formData.append("file", acceptedFiles[0]);
-//         console.log(acceptedFiles[0])
-//     await axios.post("/api/image/upload",formData,config).then((res)=>{
-//       console.log(res);
-//     }); 
-//   }, [])
+
 const addPostDB = (content = "", image="",location = "") => {
     return function (dispatch, getState, { history }) {
       const formData = new FormData();
@@ -72,20 +60,48 @@ const addPostDB = (content = "", image="",location = "") => {
     };
   };
 
+  const getPostOneDB = (postId) => {
+    return async function (dispatch, getState, { history }) {
+      try {
+        const { data } = await api.get(`/api/posts/${postId}`,postId);
+        console.log(data);
+        dispatch(getPostOne(data));
+      } catch (error) {
+        alert("데이터를 불러오지 못했습니다");
+      }
+    };
+  };
+
   const deletePostDB = (postId) => {
     return function (dispatch, getState, { history }) {
       api
-        .post("/api/posts/:postId",postId)
+        .delete(`/api/posts/${postId}`,postId)
         .then(function (response) {
-          console.log(response)
-          return;
+          console.log(response);
           history.replace("/");
+          window.location.reload();
         })
         .catch(function (err) {
-          alert("삭제 실패");
+          alert("본인이 작성한 글이 아닙니다");
         });
     };
   };
+
+  const editPostDB = (postId,content) => {
+    return function (dispatch, getState, { history }) {
+      api
+        .patch(`/api/posts/${postId}`,postId,content)
+        .then(function (response) {
+          console.log(response);
+          history.replace("/");
+          window.location.reload();
+        })
+        .catch(function (err) {
+          alert("본인이 작성한 글이 아닙니다");
+        });
+    };
+  };
+
 
 
 
@@ -99,8 +115,11 @@ export default handleActions({
     [GET_POST]: (state, action) =>
       produce(state, (draft) => {
         draft.post=action.payload.postList.data;
-        console.log(draft.post)
       }),
+    [GET_POSTONE]: (state, action) =>
+      produce(state, (draft) => {
+        draft.target=action.payload.post_one;
+      }),  
 
 
       
@@ -111,6 +130,8 @@ const actionCreators = {
     addPostDB,
     getPostDB,
     deletePostDB,
+    editPostDB,
+    getPostOneDB,
   };
   
   export { actionCreators };
