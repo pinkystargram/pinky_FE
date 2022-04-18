@@ -2,10 +2,12 @@ import React from "react";
 import styled from "styled-components";
 import Image from "../elements/Image";
 import Text from "../elements/Text";
+import { Grid } from "../elements";
 import IconButton from "../elements/IconButton";
 import CommentList from "../components/CommentList";
 import { useHistory } from "react-router-dom";
 import {useDispatch,useSelector} from "react-redux";
+import CommentWrite from "../components/CommentWrite"
 
 const Detail = (props) => {
   const history =useHistory();
@@ -43,6 +45,9 @@ const Detail = (props) => {
             <Text bold >좋아요 {targetPost.likeCount}개</Text>
             <Text size="14px" margin="-10px 0px 0px 0px">댓글 {targetPost.commentCount}개 모두보기</Text>
             <Text size="8px">{targetPost.updatedAt}</Text>
+            <Grid width="100%">
+              <CommentWrite/>
+            </Grid>
           </PostContentContent>
         </ContentDiv>
       </DetailModal>

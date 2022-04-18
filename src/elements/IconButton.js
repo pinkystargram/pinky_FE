@@ -42,6 +42,7 @@ const IconButton = (props) => {
     location,
     setting,
     smile,
+    zIndex,
   } = props;
 
   const styles = {
@@ -51,6 +52,7 @@ const IconButton = (props) => {
     margin: margin,
     cursor: cursor,
     color: color,
+    zIndex:zIndex,
   };
 
   //아이콘 작동
@@ -260,6 +262,7 @@ IconButton.defaultProps = {
   width: "100%",
   cursor: "pointer",
   color: "white",
+  zIndex:null,
 };
 
 const Icon = styled.div`
@@ -267,9 +270,9 @@ const Icon = styled.div`
   cursor: ${(props) => props.cursor};
   width: ${(props) => props.width};
   height: ${(props) => props.height};
-  margin: ${(props) => props.margin};
   padding: ${(props) => props.padding};
   ${(props) => (props.color ? `color:${props.color};` : "")}
+  z-index: ${(props) => props.zIndex};
 `;
 
 export default IconButton;
