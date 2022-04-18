@@ -213,6 +213,7 @@ const ImageCircle = styled.div`
   background-image: url("${(props) => props.src}");
   background-size: cover;
   margin: ${(props) => props.margin};
+  cursor: ${(props) => props.cursor};
 `;
 
 // 마이페이지 프로필 커스텀
