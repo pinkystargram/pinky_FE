@@ -8,25 +8,20 @@ const ADD_POST = "ADD_POST";
 const GET_POST = "GET_POST";
 const DELETE_POST = "DELETE_POST";
 const EDIT_POST = "EDIT_POST";
-const GET_POSTONE="GET_POSTONE";
-
+const GET_POSTONE = "GET_POSTONE";
 
 //initialState
 const initialState = {
-    post:[],
-    target:[]
-}
+  post: [],
+  target: [],
+};
 
 //액션생성함수
-const addPost = createAction(ADD_POST, (postData) => ({ postData }))
-const getPost = createAction(GET_POST, (postList) => ({ postList }))
+const addPost = createAction(ADD_POST, (postData) => ({ postData }));
+const getPost = createAction(GET_POST, (postList) => ({ postList }));
 const deletePost = createAction(DELETE_POST, (postId) => ({ postId }));
 const editPost = createAction(EDIT_POST, (postId) => ({ postId }));
 const getPostOne = createAction(GET_POSTONE, (post_one) => ({ post_one }));
-const addPostDB = (content = "", image="",location = "") => {
-    return function (dispatch, getState, { history }) {
-      const formData = new FormData();
-      const config = {
 
 const addPostDB = (content = "", image = "", location = "") => {
   return function (dispatch, getState, { history }) {
@@ -63,47 +58,47 @@ const getPostDB = () => {
   };
 };
 
-  const getPostOneDB = (postId) => {
-    return async function (dispatch, getState, { history }) {
-      try {
-        const { data } = await api.get(`/api/posts/${postId}`,postId);
-        console.log(data);
-        dispatch(getPostOne(data));
-      } catch (error) {
-        console.log(error);
-      }
-    };
+const getPostOneDB = (postId) => {
+  return async function (dispatch, getState, { history }) {
+    try {
+      const { data } = await api.get(`/api/posts/${postId}`, postId);
+      console.log(data);
+      dispatch(getPostOne(data));
+    } catch (error) {
+      console.log(error);
+    }
   };
+};
 
-  const deletePostDB = (postId) => {
-    return function (dispatch, getState, { history }) {
-      api
-        .delete(`/api/posts/${postId}`,postId)
-        .then(function (response) {
-          console.log(response);
-          history.replace("/");
-          window.location.reload();
-        })
-        .catch(function (err) {
-          alert("본인이 작성한 글이 아닙니다");
-        });
-    };
+const deletePostDB = (postId) => {
+  return function (dispatch, getState, { history }) {
+    api
+      .delete(`/api/posts/${postId}`, postId)
+      .then(function (response) {
+        console.log(response);
+        history.replace("/");
+        window.location.reload();
+      })
+      .catch(function (err) {
+        alert("본인이 작성한 글이 아닙니다");
+      });
   };
+};
 
-  const editPostDB = (postId,content) => {
-    return function (dispatch, getState, { history }) {
-      api
-        .patch(`/api/posts/${postId}`,postId,content)
-        .then(function (response) {
-          console.log(response);
-          history.replace("/");
-          window.location.reload();
-        })
-        .catch(function (err) {
-          alert("본인이 작성한 글이 아닙니다");
-        });
-    };
+const editPostDB = (postId, content) => {
+  return function (dispatch, getState, { history }) {
+    api
+      .patch(`/api/posts/${postId}`, postId, content)
+      .then(function (response) {
+        console.log(response);
+        history.replace("/");
+        window.location.reload();
+      })
+      .catch(function (err) {
+        alert("본인이 작성한 글이 아닙니다");
+      });
   };
+};
 
 //리듀서
 export default handleActions(
@@ -114,23 +109,23 @@ export default handleActions(
       }),
     [GET_POST]: (state, action) =>
       produce(state, (draft) => {
-        draft.post=action.payload.postList.data;
+        draft.post = action.payload.postList.data;
       }),
     [GET_POSTONE]: (state, action) =>
       produce(state, (draft) => {
-        draft.target=action.payload.post_one;
-      }),  
-      
-}, initialState);
+        draft.target = action.payload.post_one;
+      }),
+  },
+  initialState
+);
 
 const actionCreators = {
-    addPost,
-    addPostDB,
-    getPostDB,
-    deletePostDB,
-    editPostDB,
-    getPostOneDB,
-  };
-  
-export { actionCreators };
+  addPost,
+  addPostDB,
+  getPostDB,
+  deletePostDB,
+  editPostDB,
+  getPostOneDB,
+};
 
+export { actionCreators };
