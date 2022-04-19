@@ -52,8 +52,6 @@ const Header = () => {
             <IconButton plusIcon _onClick={goWrite} color="black" />
             <IconButton compass color="black" />
             <IconButton unLikeIcon color="black" />
-
-            <Grid>
               <Image
                 cursor="pointer"
                 imageType="circle"
@@ -62,14 +60,15 @@ const Header = () => {
               />
               {dropmenu ? (
                 <DropContent>
-                  <Text _onClick={logOut}>로그아웃</Text>
-                  <Text _onClick={goMypage}>프로필</Text>
+                  <p onClick={logOut} style={{cursor:"pointer"}}>로그아웃</p>
+                  <hr/>
+                  <p onClick={goMypage} style={{cursor:"pointer"}}>프로필</p>
                 </DropContent>
               ) : (
                 ""
               )}
-            </Grid>
           </IConBtns>
+          
         </HeaderWrapper>
       </HeaderWrap>
     );
@@ -80,9 +79,14 @@ const Header = () => {
 
 const DropContent = styled.div`
   position: absolute;
-  background-color: #f1f1f1;
+  top:44px;
+  right:0;
+  background-color: white;
   min-width: 160px;
   z-index: 1;
+  text-align:center;
+  border-radius:0px 0px 5px 5px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 `;
 
 const HeaderWrap = styled.div`
@@ -90,7 +94,7 @@ const HeaderWrap = styled.div`
   height: 50px;
   background: white;
   border-bottom: 1px solid #e4e4e4;
-  position: fixed;
+  position:fixed;
   top: 0;
   left: 0;
   z-index: 1;
@@ -115,11 +119,12 @@ const HeaderWrapper = styled.div`
   justify-content: space-between;
 `;
 const IConBtns = styled.div`
-  display: flex;
   width: 300px;
   // background:red;
+  display: flex;
   justify-content: space-between;
   align-items: center;
+  position:relative;
 `;
 
 export default Header;

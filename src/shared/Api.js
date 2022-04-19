@@ -4,7 +4,7 @@ import { history } from "../redux/configStore";
 
 export const api = axios.create({
   // 실제 베이스 유알엘
-  baseURL: "http://52.79.81.116:3000/",
+  baseURL: "https://ggulduk2.shop",
   headers: {
     "content-type": "application/json;charset=UTF-8",
     accept: "application/json",

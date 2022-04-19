@@ -4,25 +4,41 @@ import { Text, IconButton, Image, Grid } from "../elements/index";
 import { useHistory } from "react-router-dom";
 import { actionCreators as postActions } from "../redux/modules/post";
 import CommentsWrite from "./CommentWrite";
-import { useDispatch } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
 
 const Post = (props) => {
   const dispatch = useDispatch();
+  const likeState=props.likeState;
+  const bookmarkState=props.bookmarkState;
   const [isOpen, setMenu] = React.useState(false);
   const id = props.postId;
   const history = useHistory();
   const goDetail = () => {
     history.push(`/post/${id}`);
   };
-
+  
   const modalUp = () => {
     setMenu(true);
   };
   const modalDown = () => {
     setMenu(false);
   };
+  const like=()=>{
+    if(likeState==false){
+      dispatch(postActions.addLikeDB(id))
+    }else{
+      dispatch(postActions.minusLikeDB(id))
+    }
+  }
+  const bookmark=()=>{
+    if(bookmarkState==false){
+      dispatch(postActions.addBookmarkDB(id))
+    }else{
+      dispatch(postActions.cancleBookmarkDB(id))
+    }
+  }
+
   const deletePost = () => {
-    console.log("지금부터 삭제를 시작한다");
     dispatch(postActions.deletePostDB(id));
   };
 
@@ -77,22 +93,17 @@ const Post = (props) => {
               justifyContent: "space-between",
             }}
           >
-            <IconButton unLikeIcon color="black" />
+            {likeState?<IconButton likeIcon color="pink" _onClick={like}/>:<IconButton unLikeIcon color="black"_onClick={like}/>}
             <IconButton message color="black" />
             <IconButton airplane color="black" />
           </div>
-          <IconButton bookmark />
+          {bookmarkState?<IconButton bookmarkFill color="black" _onClick={bookmark}/>:<IconButton bookmark _onClick={bookmark} color="black"/> }
         </PostContentHeader>
         <PostContentContent>
-          <Text bold margin="10px 0px -10px 0px">
+          <Text bold margin="10px 0px -10px 0px" >
             좋아요 {props.likeCount}개
           </Text>
-          <div style={{ display: "flex", alignItems: "center" }}>
-            <Text bold margin="2px">
-              {props.nickname}
-            </Text>
-            <Text margin="2x">{props.content}</Text>
-          </div>
+            <Text><span style={{fontWeight:"bold", marginRight:"5px"}}>{props.nickname}</span>{props.content}</Text>
           <Text
             size="14px"
             margin="-10px 0px 0px 0px"
@@ -101,7 +112,7 @@ const Post = (props) => {
           >
             댓글 {props.commentCount}개 모두보기
           </Text>
-          <Text size="8px">{props.updatedAt}</Text>
+          <Text size="8px">{props.createdAt}</Text>
         </PostContentContent>
         <Grid>
           <CommentsWrite id={id} />
