@@ -58,6 +58,7 @@ const getPostDB = () => {
   };
 };
 
+
   const getPostOneDB = (postId) => {
     return async function (dispatch, getState, { history }) {
       try {
@@ -68,6 +69,7 @@ const getPostDB = () => {
       }
     };
   }
+
 
 const deletePostDB = (postId) => {
   return function (dispatch, getState, { history }) {
@@ -99,6 +101,7 @@ const deletePostDB = (postId) => {
         });
     };
   }
+
 
 
 //리듀서

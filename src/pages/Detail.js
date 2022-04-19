@@ -6,8 +6,8 @@ import { Grid } from "../elements";
 import IconButton from "../elements/IconButton";
 import CommentList from "../components/CommentList";
 import { useHistory } from "react-router-dom";
-import {useDispatch,useSelector} from "react-redux";
-import CommentWrite from "../components/CommentWrite"
+import { useDispatch, useSelector } from "react-redux";
+import CommentWrite from "../components/CommentWrite";
 import { actionCreators as postActions } from "../redux/modules/post";
 
 const Detail = (props) => {
@@ -15,16 +15,18 @@ const Detail = (props) => {
   React.useEffect(() => {
     dispatch(postActions.getPostOneDB(id));
   }, []);
-  const targetPostOne=useSelector((state)=>state.post.target?state.post.target:null);
-  const dispatch=useDispatch();
-  const history =useHistory();
-  const postlist=useSelector((state)=>state.post.post)
-  
+  const targetPostOne = useSelector((state) =>
+    state.post.target ? state.post.target : null
+  );
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const postlist = useSelector((state) => state.post.post);
+
   console.log(targetPostOne);
-  const targetPost=postlist.find((p)=>p.postId===id);
-  const goBack=()=>{
+  const targetPost = postlist.find((p) => p.postId === id);
+  const goBack = () => {
     history.push("/");
-  }
+  };
   console.log(targetPostOne);
   if (targetPostOne.length == 0) {
     console.log("되라 제발");
@@ -36,25 +38,43 @@ const Detail = (props) => {
       <ModalBg onClick={goBack} />
       <DetailModal>
         <ImageDiv>
-            <ImageContent src={targetPostOne.data.imageUrl}/>
+          <ImageContent src={targetPostOne.data.imageUrl} />
         </ImageDiv>
         <ContentDiv>
           <PostHeader>
-            <div style={{width:"90%",display:"flex",alignItems:"center"}} >
-              <Image imageType ="circle"/>
-              <Text bold color="#323232" margin="10px">{targetPostOne.data.nickname}</Text>
-            </div>
+            <Grid display="flex" ju margin="10px 0" alignItems="center">
+              <Image
+                src={targetPostOne.data.commentList.profileImageUrl}
+                imageType="circle"
+                size="35"
+                margin="5px 15px 5px 5px"
+              />
+              <Text
+                bold
+                color="#4B4B4B"
+                margin="5px 5px"
+                size="14px"
+                display="inline"
+                width="370px"
+              >
+                <span style={{ margin: "0 5px 0 0" }}>
+                  {targetPostOne.data.nickname}
+                </span>
+              </Text>
+            </Grid>
             <IconButton moreView size="16px" color="#323232" />
           </PostHeader>
           <CommentListWrapper>
             <CommentList />
           </CommentListWrapper>
           <PostContentContent>
-            <Text bold >좋아요 {targetPostOne.data.likeCount}개</Text>
-            <Text size="14px" margin="-10px 0px 0px 0px">댓글{targetPostOne.data.commentList.length}개 모두보기</Text>
+            <Text bold>좋아요 {targetPostOne.data.likeCount}개</Text>
+            <Text size="14px" margin="-10px 0px 0px 0px">
+              댓글{targetPostOne.data.commentList.length}개 모두보기
+            </Text>
             <Text size="8px">{targetPostOne.data.updatedAt}</Text>
             <Grid width="100%">
-              <CommentWrite />
+              <CommentWrite id={targetPostOne.data.postId} />
             </Grid>
           </PostContentContent>
         </ContentDiv>
@@ -129,7 +149,7 @@ const PostHeader = styled.div`
   height: 50px;
   display: flex;
   align-items: center;
-  border-bottom: 1px solid#e4e4e4;
+  border-bottom: 1px solid #e4e4e4;
   justify-content: space-between;
   padding: 0px 10px;
   box-sizing: border-box;

@@ -15,20 +15,20 @@ const Post = (props) => {
     history.push(`/post/${id}`);
   };
 
-  const modalUp=()=>{
-      setMenu(true);
-  }
-  const modalDown=()=>{
-      setMenu(false);
-  }
-  const deletePost=()=>{
-    console.log("지금부터 삭제를 시작한다")
+  const modalUp = () => {
+    setMenu(true);
+  };
+  const modalDown = () => {
+    setMenu(false);
+  };
+  const deletePost = () => {
+    console.log("지금부터 삭제를 시작한다");
     dispatch(postActions.deletePostDB(id));
-  }
-  
-  const editPost=()=>{
+  };
+
+  const editPost = () => {
     history.push(`/edit/${id}`);
-  }
+  };
 
   return (
     <PostContainer>
@@ -122,7 +122,7 @@ const PostHeader = styled.div`
   height: 50px;
   display: flex;
   align-items: center;
-  border-bottom: 1px solid#e4e4e4;
+  border-bottom: 1px solid #e4e4e4;
   justify-content: space-between;
   padding: 0px 10px;
   box-sizing: border-box;
