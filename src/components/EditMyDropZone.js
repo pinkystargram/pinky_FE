@@ -30,9 +30,10 @@ function EditMyDropzone(props) {
   const [imgBase64, setImgBase64] = useState(""); // 파일 base64
   const postlist=useSelector((state)=>state.post.post)
   const editPost=()=>{
-    dispatch(PostActions.editPostDB(content,location));
+    dispatch(PostActions.editPostDB(id,content,location));
   }
   
+
   console.log(targetPostOne);
   if (targetPostOne.length == 0) {
     console.log("되라 제발");
@@ -64,7 +65,7 @@ function EditMyDropzone(props) {
                 </div>
               </PostHeader>
               <Grid margin="50px 0px 0px 0px">
-                <Input multiLine placeholder="문구입력..." _onChange={(e) => {
+                <Input multiLine placeholder="문구입력..." value={content}_onChange={(e) => {
                 setContent(e.target.value);
               }}></Input>
                 <hr/>

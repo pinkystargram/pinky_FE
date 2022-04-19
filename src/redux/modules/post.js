@@ -22,6 +22,7 @@ const getPost = createAction(GET_POST, (postList) => ({ postList }));
 const deletePost = createAction(DELETE_POST, (postId) => ({ postId }));
 const editPost = createAction(EDIT_POST, (postId) => ({ postId }));
 const getPostOne = createAction(GET_POSTONE, (post_one) => ({ post_one }));
+
 const addPostDB = (content = "", image = "", location = "") => {
   return function (dispatch, getState, { history }) {
     const formData = new FormData();
@@ -57,16 +58,18 @@ const getPostDB = () => {
   };
 };
 
-const getPostOneDB = (postId) => {
-  return async function (dispatch, getState, { history }) {
-    try {
-      const { data } = await api.get(`/api/posts/${postId}`, postId);
-      dispatch(getPostOne(data));
-    } catch (error) {
-      console.log(error);
-    }
-  };
-};
+
+  const getPostOneDB = (postId) => {
+    return async function (dispatch, getState, { history }) {
+      try {
+        const { data } = await api.get(`/api/posts/${postId}`,postId);
+        dispatch(getPostOne(data));
+      } catch (error) {
+        console.log(error);
+      }
+    };
+  }
+
 
 const deletePostDB = (postId) => {
   return function (dispatch, getState, { history }) {
@@ -83,21 +86,23 @@ const deletePostDB = (postId) => {
   };
 };
 
-const editPostDB = (postId = "", content = "", location = "") => {
-  return function (dispatch, getState, { history }) {
-    api
-      .patch(`/api/posts/${postId}`, content, location)
-      .then(function (response) {
-        console.log(response);
-        return;
-        history.replace("/");
-        window.location.reload();
-      })
-      .catch(function (err) {
-        alert("본인이 작성한 글이 아닙니다");
-      });
-  };
-};
+
+  const editPostDB = (postId="",content="",location="") => {
+    return function (dispatch, getState, { history }) {
+      api
+        .patch(`/api/posts/${postId}`,{"content":content,"location":location})
+        .then(function (response) {
+          console.log(response);
+          history.replace("/");
+          // window.location.reload();
+        })
+        .catch(function (err) {
+          alert("본인이 작성한 글이 아닙니다");
+        });
+    };
+  }
+
+
 
 //리듀서
 export default handleActions(
