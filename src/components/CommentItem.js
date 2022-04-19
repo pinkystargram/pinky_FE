@@ -1,12 +1,40 @@
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
 import styled from "styled-components";
 import { Grid, Image, Text, IconButton } from "../elements";
 
 const CommentItem = (props) => {
   const [isHovering, setIsHovering] = useState(0);
+  const [isOpen, setMenu] = React.useState(false);
+
+  const modalUp = () => {
+    setMenu(true);
+  };
+  const modalDown = () => {
+    setMenu(false);
+  };
 
   return (
-    <>
+    <Fragment>
+      {isOpen && (
+        <ModalBg onClick={modalDown}>
+          <div style={{ position: "fixed", top: "20px", right: "20px" }}>
+            <IconButton
+              cancle
+              _onClick={modalDown}
+              zIndex="100"
+              color="white"
+            />
+          </div>
+        </ModalBg>
+      )}
+      {isOpen && (
+        <DetailModal>
+          <Text cursor="pointer">삭제하기</Text>
+          <hr />
+          <Text cursor="pointer">수정하기</Text>
+        </DetailModal>
+      )}
+
       <Grid
         display="flex"
         flexDirection="column"
@@ -48,7 +76,7 @@ const CommentItem = (props) => {
             </Grid>
             <Grid display="flex" margin="5px">
               <Text color="#8E8E8E" margin="0 10px 0 0" size="13px">
-                {props.insert_dt}
+                {props.createdAt}
               </Text>
               <Text
                 cursor="pointer"
@@ -60,7 +88,12 @@ const CommentItem = (props) => {
                 답글 달기
               </Text>
               {isHovering ? (
-                <IconButton moreView color="#8E8E8E" size="20" />
+                <IconButton
+                  _onClick={modalUp}
+                  moreView
+                  color="#8E8E8E"
+                  size="20"
+                />
               ) : (
                 <IconButton moreView color="white" size="20" />
               )}
@@ -68,13 +101,37 @@ const CommentItem = (props) => {
           </Grid>
         </Grid>
       </Grid>
-    </>
+    </Fragment>
   );
 };
-CommentItem.defaultProps = {
-  nickname: "u_display",
-  content: "여기 어딘가요? 너무 가고싶네요ㅠㅠ  ",
-  insert_dt: "3일",
-};
+
+const ModalBg = styled.div`
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  cursor: pointer;
+`;
+
+const DetailModal = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 300px;
+  width: 300px;
+  background: white;
+  height: 200px;
+  border-radius: 20px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  z-index: 5;
+`;
 
 export default CommentItem;

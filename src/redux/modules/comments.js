@@ -23,16 +23,17 @@ const initialState = {
   list: [],
 };
 
-// 미들웨어
-// export const _getCommentFX = (openApiId) => {
-//   return async function (dispatch, getState) {
-//     api.
-//     } catch (error) {
-//       alert("댓글 가져오기 에러");
-//       console.log(error);
-//     }
-//   };
-// };
+export const _getCommentFX = (postId) => {
+  return async function (dispatch, getState, { history }) {
+    try {
+      const { data } = await api.get(`/api/posts/${postId}`);
+      console.log(data);
+      dispatch(getComm(data));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
 
 export const _addCommentFX = (postId, content) => {
   return function (dispatch) {
@@ -40,9 +41,8 @@ export const _addCommentFX = (postId, content) => {
     api
       .post(`/api/comments/${postId}`, { content: content })
       .then((res) => {
-        console.log(res);
-        alert("댓글달기 성공!");
-        dispatch(addComm(res.data));
+        console.log(res.data.data);
+        dispatch(addComm(res.data.data.commentList));
       })
       .catch((error) => {
         console.log(error);
@@ -53,16 +53,17 @@ export const _addCommentFX = (postId, content) => {
 // Reducer
 export default handleActions(
   {
-    // [LOAD]: (state, action) => {
-    //   return {
-    //     ...state,
-    //     list: action.payload.comment,
-    //   };
-    // },
+    [GET_COMM]: (state, action) =>
+      produce(state, (draft) => {
+        console.log(action.payload);
+        draft.list = action.payload.data.commentList;
+        console.log(draft);
+      }),
+
     [ADD_COMM]: (state, action) =>
       produce(state, (draft) => {
-        draft.list.push(action.payload.comment);
-        draft.list.push(action.payload.commentId);
+        console.log(state, action.payload);
+        draft.list.push(action.payload);
       }),
     // [DELETE]: (state, action) => {
     //   return {
