@@ -28,13 +28,13 @@ const Wrap = styled.div`
   padding: 0;
   margin: 0;
   background: #fafafa;
-  height: 100vh;
+  height: 100%;
 `;
 const Wrapper = styled.div`
   max-width: 1000px;
   margin: 0 auto;
   display: flex;
-  align-items: stretch;
+  align-items: top;
   height: 100%;
 `;
 const Sidebar = styled.div`

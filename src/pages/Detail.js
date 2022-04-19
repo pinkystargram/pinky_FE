@@ -72,7 +72,7 @@ const Detail = (props) => {
             <Text size="14px" margin="-10px 0px 0px 0px">
               댓글{targetPostOne.data.commentList.length}개 모두보기
             </Text>
-            <Text size="8px">{targetPostOne.data.updatedAt}</Text>
+            <Text size="8px">{targetPostOne.data.createdAt}</Text>
             <Grid width="100%">
               <CommentWrite id={targetPostOne.data.postId} />
             </Grid>

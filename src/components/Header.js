@@ -59,29 +59,25 @@ const Header = () => {
             <IconButton plusIcon _onClick={goWrite} color="black" />
             <IconButton compass color="black" />
             <IconButton unLikeIcon color="black" />
-
-            <Grid>
-              <Image
-                cursor="pointer"
-                imageType="circle"
-                color="black"
-                _onClick={dropToggle}
-              />
-              {dropmenu ? (
-                <DropContent>
-                  <Text _onClick={logOut}>로그아웃</Text>
-                  <Text
-                    _onClick={() => {
-                      goMypage(user_info.userId);
-                    }}
-                  >
-                    프로필
-                  </Text>
-                </DropContent>
-              ) : (
-                ""
-              )}
-            </Grid>
+            <Image
+              cursor="pointer"
+              imageType="circle"
+              color="black"
+              _onClick={dropToggle}
+            />
+            {dropmenu ? (
+              <DropContent>
+                <p onClick={logOut} style={{ cursor: "pointer" }}>
+                  로그아웃
+                </p>
+                <hr />
+                <p onClick={goMypage} style={{ cursor: "pointer" }}>
+                  프로필
+                </p>
+              </DropContent>
+            ) : (
+              ""
+            )}
           </IConBtns>
         </HeaderWrapper>
       </HeaderWrap>
@@ -93,9 +89,14 @@ const Header = () => {
 
 const DropContent = styled.div`
   position: absolute;
-  background-color: #f1f1f1;
+  top: 44px;
+  right: 0;
+  background-color: white;
   min-width: 160px;
   z-index: 1;
+  text-align: center;
+  border-radius: 0px 0px 5px 5px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 `;
 
 const HeaderWrap = styled.div`
@@ -109,7 +110,6 @@ const HeaderWrap = styled.div`
   z-index: 1;
 `;
 const SearchBar = styled.input`
-  type: text;
   border: none;
   background: grey;
   border-radius: 5px;
@@ -128,11 +128,12 @@ const HeaderWrapper = styled.div`
   justify-content: space-between;
 `;
 const IConBtns = styled.div`
-  display: flex;
   width: 300px;
   // background:red;
+  display: flex;
   justify-content: space-between;
   align-items: center;
+  position: relative;
 `;
 
 export default Header;
