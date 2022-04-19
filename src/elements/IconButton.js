@@ -13,6 +13,7 @@ import { GoLocation } from "react-icons/go";
 import { IoPaperPlaneOutline, IoSettingsSharp } from "react-icons/io5";
 import { BsBookmark } from "react-icons/bs";
 import { CgSmile } from "react-icons/cg";
+import {BsFillBookmarkFill} from "react-icons/bs";
 
 const IconButton = (props) => {
   const {
@@ -37,6 +38,7 @@ const IconButton = (props) => {
     color,
     airplane,
     bookmark,
+    bookmarkFill,
     cancle,
     photo,
     location,
@@ -107,6 +109,15 @@ const IconButton = (props) => {
       <React.Fragment>
         <Icon {...styles}>
           <MdOutlineAddBox size={size} onClick={_onClick}></MdOutlineAddBox>
+        </Icon>
+      </React.Fragment>
+    );
+  }
+  if (bookmarkFill) {
+    return (
+      <React.Fragment>
+        <Icon {...styles}>
+          <BsFillBookmarkFill size={size} onClick={_onClick}></BsFillBookmarkFill>
         </Icon>
       </React.Fragment>
     );
