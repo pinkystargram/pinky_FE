@@ -1,8 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Grid, Text, IconButton, Image } from "../elements";
 import styled from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
+import { _getMyPost } from "../redux/modules/mypage";
 
 const MyPost = () => {
+  const dispatch = useDispatch();
+  const mypost = useSelector((state) => state);
+  console.log(mypost);
+
+  // React.useEffect(() => {
+  //   dispatch(_getMyPost());
+  // }, []);
+
+  // if (commentList.length == undefined) {
+  //   console.log("되라 제발");
+  //   return <></>;
+  // }
+
   return (
     <React.Fragment>
       <Grid maxWidth="935px" margin="0 auto" padding="20px 20px 100px 20px">

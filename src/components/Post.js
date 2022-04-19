@@ -159,7 +159,6 @@ const DetailModal = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-text: center;
   align-items: center;
   max-width: 300px;
   width: 300px;

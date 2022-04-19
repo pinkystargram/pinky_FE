@@ -6,6 +6,7 @@ import { handleActions } from "redux-actions";
 // Action
 const ADD_COMM = "ADD_COMM";
 const GET_COMM = "GET_COMM";
+const DELETE_COMM = "DELETE_COMM";
 
 // Action creators
 export const getComm = (payload) => ({
@@ -15,6 +16,11 @@ export const getComm = (payload) => ({
 
 export const addComm = (payload) => ({
   type: ADD_COMM,
+  payload,
+});
+
+export const deleteComm = (payload) => ({
+  type: DELETE_COMM,
   payload,
 });
 
@@ -36,13 +42,29 @@ export const _getCommentFX = (postId) => {
 };
 
 export const _addCommentFX = (postId, content) => {
-  return function (dispatch) {
+  return function (dispatch, { history }) {
     console.log(postId, content);
     api
       .post(`/api/comments/${postId}`, { content: content })
       .then((res) => {
         console.log(res.data.data);
         dispatch(addComm(res.data.data.commentList));
+        window.alert("댓글 등록 완료");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+
+export const _deleteCommentFX = (commentId) => {
+  return function (dispatch, { history }) {
+    console.log(commentId);
+    api
+      .delete(`/api/comments/${commentId}`)
+      .then((res) => {
+        console.log(res);
+        dispatch(deleteComm(commentId));
       })
       .catch((error) => {
         console.log(error);
@@ -55,22 +77,20 @@ export default handleActions(
   {
     [GET_COMM]: (state, action) =>
       produce(state, (draft) => {
-        console.log(action.payload);
         draft.list = action.payload.data.commentList;
-        console.log(draft);
       }),
 
     [ADD_COMM]: (state, action) =>
       produce(state, (draft) => {
-        console.log(state, action.payload);
         draft.list.push(action.payload);
       }),
-    // [DELETE]: (state, action) => {
-    //   return {
-    //     ...state,
-    //     list: state.list.filter((list) => list.id !== action.payload.commentId),
-    //   };
-    // },
+    [DELETE_COMM]: (state, action) =>
+      produce(state, (draft) => {
+        const new_list = draft.list.filter(
+          (list) => list.commentId !== action.payload
+        );
+        draft.list = new_list;
+      }),
   },
   initialState
 );

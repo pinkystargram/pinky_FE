@@ -1,31 +1,56 @@
-import axios from "axios";
+import { handleActions } from "redux-actions";
+import { produce } from "immer";
+import { api } from "../../shared/Api";
 
-// Action
-const ADD_COMM = "comment/ADD_COMM";
+// actions
+// const MY_POST = "MY_POST";
+const GET_MY_POST = "GET_MY_POST";
+// const SET_POST = "SET_POST";
 
-// Action creators
-export const addComment = (payload) => ({
-  type: ADD_COMM,
+//action creators
+
+export const getMyPost = (payload) => ({
+  type: GET_MY_POST,
   payload,
 });
 
-// 초기값
+//initialState
 const initialState = {
-  comments: [],
+  list: [],
 };
 
-// 미들웨어
-
-// Reducer
-const mypage = (state = initialState, action) => {
-  switch (action.type) {
-    case ADD_COMM: {
-      return;
-    }
-
-    default:
-      return state;
-  }
+// middleware actions
+export const _getMyPost = (userId) => {
+  return function (dispatch, { history }) {
+    console.log(userId);
+    api
+      .post(`/api/users/${userId}/mypage`)
+      .then((res) => {
+        console.log(res);
+        dispatch(getMyPost(res));
+        window.alert("댓글 등록 완료");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 };
 
-export default mypage;
+// reducer
+// draft = state의 복제품 (불변성 유지)
+export default handleActions(
+  {
+    [GET_MY_POST]: (state, action) =>
+      produce(state, (draft) => {
+        console.log(action.payload);
+        draft.list = { ...action.payload };
+      }),
+    // [SET_POST]: (state, action) =>
+    //   produce(state, (draft) => {
+    //     console.log(state);
+    //     console.log(action);
+    //     draft.list = { ...action.payload.mypost };
+    //   }),
+  },
+  initialState
+);

@@ -11,6 +11,8 @@ import { useSelector, useDispatch } from "react-redux";
 const Header = () => {
   const dispatch = useDispatch();
   const [dropmenu, setDropmenu] = React.useState(false);
+  const user_info = useSelector((state) => state.user.user);
+  console.log(user_info);
 
   const dropToggle = () => {
     return setDropmenu(!dropmenu);
@@ -33,12 +35,17 @@ const Header = () => {
     history.push("/ImagePost");
   };
 
-  const goMypage = () => {
+  const goMypage = (userId) => {
     dropToggle();
-    history.push("/MyPage");
+    history.push(`/MyPage/${userId}`);
   };
 
   const isLogin = useSelector((state) => state.user.is_login);
+
+  if (user_info.userId == undefined) {
+    console.log("제발 오류 ㄴㄴ");
+    return <></>;
+  }
 
   if (isLogin) {
     return (
@@ -63,7 +70,13 @@ const Header = () => {
               {dropmenu ? (
                 <DropContent>
                   <Text _onClick={logOut}>로그아웃</Text>
-                  <Text _onClick={goMypage}>프로필</Text>
+                  <Text
+                    _onClick={() => {
+                      goMypage(user_info.userId);
+                    }}
+                  >
+                    프로필
+                  </Text>
                 </DropContent>
               ) : (
                 ""

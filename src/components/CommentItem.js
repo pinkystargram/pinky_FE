@@ -1,8 +1,11 @@
 import React, { Fragment, useState } from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { Grid, Image, Text, IconButton } from "../elements";
+import { _deleteCommentFX } from "../redux/modules/comments";
 
 const CommentItem = (props) => {
+  const dispatch = useDispatch();
   const [isHovering, setIsHovering] = useState(0);
   const [isOpen, setMenu] = React.useState(false);
 
@@ -11,6 +14,11 @@ const CommentItem = (props) => {
   };
   const modalDown = () => {
     setMenu(false);
+  };
+
+  const deleteComm = (commentId) => {
+    modalDown();
+    dispatch(_deleteCommentFX(commentId));
   };
 
   return (
@@ -29,9 +37,18 @@ const CommentItem = (props) => {
       )}
       {isOpen && (
         <DetailModal>
-          <Text cursor="pointer">삭제하기</Text>
+          <Text
+            cursor="pointer"
+            _onClick={() => {
+              deleteComm(props.commentId);
+            }}
+          >
+            삭제하기
+          </Text>
           <hr />
-          <Text cursor="pointer">수정하기</Text>
+          <Text color="red" cursor="pointer">
+            신고하기
+          </Text>
         </DetailModal>
       )}
 
@@ -45,7 +62,12 @@ const CommentItem = (props) => {
           setIsHovering(0);
         }}
       >
-        <Grid display="flex" alignItems="flex-start" margin="10px 0" height="60px">
+        <Grid
+          display="flex"
+          alignItems="flex-start"
+          margin="10px 0"
+          height="60px"
+        >
           <Image
             src="https://cdn.mhns.co.kr/news/photo/202003/401582_512253_4343.jpg"
             imageType="circle"
