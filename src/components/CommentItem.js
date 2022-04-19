@@ -45,7 +45,7 @@ const CommentItem = (props) => {
           setIsHovering(0);
         }}
       >
-        <Grid display="flex" alignItems="flex-start" margin="10px 0">
+        <Grid display="flex" alignItems="flex-start" margin="10px 0" height="60px">
           <Image
             src="https://cdn.mhns.co.kr/news/photo/202003/401582_512253_4343.jpg"
             imageType="circle"
