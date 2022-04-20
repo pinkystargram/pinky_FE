@@ -17,6 +17,7 @@ import ImagePost from "../pages/ImagePost";
 import MyPage from "../pages/MyPage";
 import Header from "../components/Header";
 import EditPost from "../pages/EditPost";
+import DirectMessage from "../pages/DirectMessage";
 // import ImageFilterEx from "../components/ImageFilterEx";
 
 function App() {
@@ -40,6 +41,7 @@ function App() {
         <Route path="/ImagePost" exact component={ImagePost} />
         <Route path="/MyPage/:userId" exact component={MyPage} />
         <Route path="/post/:id" exact component={Detail} />
+        <Route path="/directmessage/:userId" exact component={DirectMessage}/>
       </ConnectedRouter>
     </React.Fragment>
   );

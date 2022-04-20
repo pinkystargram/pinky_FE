@@ -151,7 +151,7 @@ const AspectInner = styled.div`
 const MyProfile = styled.div`
   width: 150px;
   height: 150px;
-  border-radius: 100%;
+  border-radius: 50%;
   background-size: cover;
   background-position: center;
   ${(props) => (props.src ? `background-image: url(${props.src});` : "")}
@@ -205,11 +205,11 @@ const ImageCircle = styled.div`
   --size: ${(props) => props.size}px;
   // width: 36px;
   // height: 36px;
-  // border-radius: 36px;
+  // border-radius:50%;
   width: var(--size);
   height: var(--size);
-  border-radius: var(--size);
-  min-width: 36px;
+  border-radius:100%;
+  // min-width: 36px;
   background-image: url("${(props) => props.src}");
   background-size: cover;
   margin: ${(props) => props.margin};

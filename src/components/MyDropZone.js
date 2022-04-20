@@ -28,7 +28,6 @@ function MyDropzone() {
     dispatch(PostActions.addPostDB(content,imgFile,location))
   }
 
-
   const goNext=()=>{
     setIsLoad(true)
   }

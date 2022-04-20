@@ -40,6 +40,10 @@ const Header = () => {
     history.push(`/MyPage/${userId}`);
   };
 
+  const goDM=(userId)=>{
+    history.push(`/directmessage/${userId}`);
+  }
+
   const isLogin = useSelector((state) => state.user.is_login);
 
   if (user_info.userId == undefined) {
@@ -55,7 +59,7 @@ const Header = () => {
           {isPc ? <SearchBar /> : null}
           <IConBtns>
             <IconButton home color="black" _onClick={goMain} />
-            <IconButton airplane color="black" />
+            <IconButton airplane color="black" _onClick={goDM}/>
             <IconButton plusIcon _onClick={goWrite} color="black" />
             <IconButton compass color="black" />
             <IconButton unLikeIcon color="black" />
