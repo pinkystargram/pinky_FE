@@ -5,6 +5,8 @@ import { api } from "../../shared/Api";
 // actions
 const GET_MY_PROFILE = "GET_MY_PROFILE";
 const GET_MY_POST = "GET_MY_POST";
+const GET_FOLLOWING = "GET_FOLLOWING";
+const GET_FOLLOWER = "GET_FOLLOWER";
 
 //action creators
 
@@ -15,6 +17,16 @@ export const getMyProfile = (payload) => ({
 
 export const getMyPost = (payload) => ({
   type: GET_MY_POST,
+  payload,
+});
+
+export const getFollowing = (payload) => ({
+  type: GET_FOLLOWING,
+  payload,
+});
+
+export const getFollower = (payload) => ({
+  type: GET_FOLLOWER,
   payload,
 });
 
@@ -61,6 +73,36 @@ export const _getMyPostFX = (userId) => {
   };
 };
 
+export const _getFollowingFX = (userId) => {
+  return function (dispatch, { history }) {
+    console.log(userId);
+    api
+      .get(`/api/users/${userId}/follow`)
+      .then((res) => {
+        console.log(res);
+        dispatch(getFollowing(res.data.data));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+
+export const _getFollowerFX = (userId) => {
+  return function (dispatch, { history }) {
+    console.log(userId);
+    api
+      .get(`/api/users/${userId}/follower`)
+      .then((res) => {
+        console.log(res);
+        dispatch(getFollower(res.data.data));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+
 // reducer
 // draft = state의 복제품 (불변성 유지)
 export default handleActions(
@@ -74,6 +116,16 @@ export default handleActions(
       produce(state, (draft) => {
         console.log(action.payload);
         draft.mypost = action.payload;
+      }),
+    [GET_FOLLOWER]: (state, action) =>
+      produce(state, (draft) => {
+        console.log(action.payload);
+        draft.follower = action.payload;
+      }),
+    [GET_FOLLOWING]: (state, action) =>
+      produce(state, (draft) => {
+        console.log(action.payload);
+        draft.following = action.payload;
       }),
   },
   initialState

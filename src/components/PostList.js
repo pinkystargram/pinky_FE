@@ -21,7 +21,6 @@ const PostList = () => {
       dispatch(postActions.getPostDB());
     }
   }, []);
-
   return (
     <PostListWrapper>
       <InfinityScroll

@@ -18,6 +18,8 @@ import MyPage from "../pages/MyPage";
 import Header from "../components/Header";
 import EditPost from "../pages/EditPost";
 import DirectMessage from "../pages/DirectMessage";
+import Follower from "../pages/Follower";
+import Following from "../pages/Following";
 // import ImageFilterEx from "../components/ImageFilterEx";
 
 function App() {
@@ -40,8 +42,10 @@ function App() {
         <Route path="/edit/:id" exact component={EditPost} />
         <Route path="/ImagePost" exact component={ImagePost} />
         <Route path="/MyPage/:userId" exact component={MyPage} />
+        <Route path="/MyPage/:userId/followers" exact component={Follower} />
+        <Route path="/MyPage/:userId/following" exact component={Following} />
         <Route path="/post/:id" exact component={Detail} />
-        <Route path="/directmessage/:userId" exact component={DirectMessage}/>
+        <Route path="/directmessage/:userId" exact component={DirectMessage} />
       </ConnectedRouter>
     </React.Fragment>
   );

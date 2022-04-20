@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { _logoutFX } from "../redux/modules/user";
 import { useParams } from "react-router-dom";
 import { _getMyProfileFX, _getMyPostFX } from "../redux/modules/mypage";
+import { history } from "../redux/configStore";
 
 import MyPost from "./MyPost";
 
@@ -18,15 +19,18 @@ const MyPostList = () => {
   console.log(myProfile);
   console.log(mypost);
 
+  const goFollower = () => {
+    history.push(`/MyPage/${userId}/followers`);
+  };
+
+  const goFollowing = () => {
+    history.push(`/MyPage/${userId}/following`);
+  };
+
   React.useEffect(() => {
     dispatch(_getMyProfileFX(userId));
     dispatch(_getMyPostFX(userId));
   }, [userId]);
-
-  // if (myProfile == undefined || mypost == undefined) {
-  //   console.log("되라 제발");
-  //   return <></>;
-  // }
 
   return (
     <>
@@ -69,8 +73,10 @@ const MyPostList = () => {
             justifyContent="space-between"
           >
             <Text>게시물 {myProfile?.postCount} </Text>
-            <Text>팔로워 {myProfile?.followerCount} </Text>
-            <Text>팔로우 {myProfile?.followCount} </Text>
+            <Text _onClick={goFollower} cursor="pointer">
+              팔로워 {myProfile?.followerCount}
+            </Text>
+            <Text _onClick={goFollowing}>팔로우 {myProfile?.followCount} </Text>
           </Grid>
           <Grid display="flex" alignItems="stretch">
             <Text margin="0">{myProfile?.bio}</Text>
