@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import { actionCreators as postActions } from "../redux/modules/post";
 import CommentsWrite from "./CommentWrite";
 import { useDispatch, useSelector } from "react-redux";
+import {actionCreators as DMActions} from "../redux/modules/dm";
 
 const Post = (props) => {
   const dispatch = useDispatch();
@@ -20,7 +21,8 @@ const Post = (props) => {
   };
 
   const goDMWrite = () => {
-    history.push(`/directmessage/${userId}`);
+    dispatch(DMActions.addRoomDB(userId))
+    // history.push(`/directmessage/${userId}`);
   };
 
   const modalUp = () => {

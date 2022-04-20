@@ -28,14 +28,31 @@ const DireactMessage =(props)=>{
                 <DMUpost>
                     slkfmlskdfmlskdfm
                 </DMUpost>
+                <CommentInput/>
                 </DMContent>
-                
             </DMBox>
         </DMWrapper>
         
     )
 }
-
+const CommentInput = styled.textarea`
+  margin: 0;
+  border:1px solid #d3d3d3;
+  border-radius:20px;
+  padding: 10px;
+  width: 650px;
+  height: 40px;
+  outline: none;
+  resize: none;
+  position:absolute;
+  bottom:60px;
+  right:290px;
+  box-sizing: border-box;
+  overflow: hidden;
+  ::placeholder {
+    color: #aeaeae;
+  }
+`
 const DMWrapper=styled.div`
 max-width:1000px;
 margin:0 auto;
@@ -117,8 +134,6 @@ padding:20px;
 box-sizing:border-box;
 transform:translateX(100%)
 `
-
-
 
 
 export default DireactMessage;
