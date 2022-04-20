@@ -13,11 +13,13 @@ import { GoLocation } from "react-icons/go";
 import { IoPaperPlaneOutline, IoSettingsSharp } from "react-icons/io5";
 import { BsBookmark } from "react-icons/bs";
 import { CgSmile } from "react-icons/cg";
-import {BsFillBookmarkFill} from "react-icons/bs";
+import { BsFillBookmarkFill } from "react-icons/bs";
+import { HiPencilAlt } from "react-icons/hi";
 
 const IconButton = (props) => {
   const {
     _onClick,
+    pencil,
     Table,
     facebookLogo,
     likeIcon,
@@ -63,6 +65,15 @@ const IconButton = (props) => {
       <React.Fragment>
         <Icon {...styles}>
           <AiOutlineTable size={size} onClick={_onClick}></AiOutlineTable>
+        </Icon>
+      </React.Fragment>
+    );
+  }
+  if (pencil) {
+    return (
+      <React.Fragment>
+        <Icon {...styles}>
+          <HiPencilAlt size={size} onClick={_onClick}></HiPencilAlt>
         </Icon>
       </React.Fragment>
     );
