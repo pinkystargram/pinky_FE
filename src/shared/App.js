@@ -21,6 +21,7 @@ import DirectMessage from "../pages/DirectMessage";
 import Follower from "../pages/Follower";
 import Following from "../pages/Following";
 // import ImageFilterEx from "../components/ImageFilterEx";
+import Test from "../pages/Test";
 
 function App() {
   const dispatch = useDispatch();
@@ -35,7 +36,7 @@ function App() {
     <React.Fragment>
       <ConnectedRouter history={history}>
         <Header></Header>
-        {/* <Route path ="/imagefilter" exact component={ImageFilterEx}/> */}
+        <Route path="/test" exact component={Test} />
         <Route path="/" exact component={Main} />
         <Route path="/login" exact component={Login} />
         <Route path="/signup" exact component={Signup} />
@@ -46,6 +47,7 @@ function App() {
         <Route path="/MyPage/:userId/following" exact component={Following} />
         <Route path="/post/:id" exact component={Detail} />
         <Route path="/directmessage/:userId" exact component={DirectMessage} />
+        <Route path="/dm/:userId" exact component={DirectMessage} />
       </ConnectedRouter>
     </React.Fragment>
   );
