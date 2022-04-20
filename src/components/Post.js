@@ -8,6 +8,8 @@ import { useDispatch, useSelector } from "react-redux";
 
 const Post = (props) => {
   const dispatch = useDispatch();
+  console.log(props);
+  const userId = props.userId;
   const likeState = props.likeState;
   const bookmarkState = props.bookmarkState;
   const [isOpen, setMenu] = React.useState(false);
@@ -15,6 +17,10 @@ const Post = (props) => {
   const history = useHistory();
   const goDetail = () => {
     history.push(`/post/${id}`);
+  };
+
+  const goDMWrite = () => {
+    history.push(`/directmessage/${userId}`);
   };
 
   const modalUp = () => {
@@ -112,7 +118,7 @@ const Post = (props) => {
               <IconButton unLikeIcon color="black" _onClick={like} />
             )}
             <IconButton message color="black" />
-            <IconButton airplane color="black" />
+            <IconButton airplane color="black" _onClick={goDMWrite} />
           </div>
           {bookmarkState ? (
             <IconButton bookmarkFill color="black" _onClick={bookmark} />
