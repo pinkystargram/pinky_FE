@@ -4,6 +4,7 @@ import Image from "../elements/Image";
 import Text from "../elements/Text";
 import { useDispatch, useSelector } from "react-redux";
 import { _FollowingUserFX } from "../redux/modules/user";
+import { history } from "../redux/configStore";
 
 const RecommendItem = (props) => {
   console.log(props);
@@ -11,6 +12,10 @@ const RecommendItem = (props) => {
 
   const following = (userId) => {
     dispatch(_FollowingUserFX(userId));
+  };
+
+  const goMypage = (userId) => {
+    history.push(`/MyPage/${userId}`);
   };
 
   return (
@@ -22,7 +27,14 @@ const RecommendItem = (props) => {
             imageType="circle"
             margin="0px 10px 0px 0px"
           />
-          <Text bold size="12px">
+          <Text
+            bold
+            size="12px"
+            _onClick={() => {
+              goMypage(props.userId);
+            }}
+            cursor="pointer"
+          >
             {props.nickname}
           </Text>
         </div>

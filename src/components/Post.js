@@ -4,39 +4,39 @@ import { Text, IconButton, Image, Grid } from "../elements/index";
 import { useHistory } from "react-router-dom";
 import { actionCreators as postActions } from "../redux/modules/post";
 import CommentsWrite from "./CommentWrite";
-import { useDispatch,useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const Post = (props) => {
   const dispatch = useDispatch();
-  const likeState=props.likeState;
-  const bookmarkState=props.bookmarkState;
+  const likeState = props.likeState;
+  const bookmarkState = props.bookmarkState;
   const [isOpen, setMenu] = React.useState(false);
   const id = props.postId;
   const history = useHistory();
   const goDetail = () => {
     history.push(`/post/${id}`);
   };
-  
+
   const modalUp = () => {
     setMenu(true);
   };
   const modalDown = () => {
     setMenu(false);
   };
-  const like=()=>{
-    if(likeState==false){
-      dispatch(postActions.addLikeDB(id))
-    }else{
-      dispatch(postActions.minusLikeDB(id))
+  const like = () => {
+    if (likeState == false) {
+      dispatch(postActions.addLikeDB(id));
+    } else {
+      dispatch(postActions.minusLikeDB(id));
     }
-  }
-  const bookmark=()=>{
-    if(bookmarkState==false){
-      dispatch(postActions.addBookmarkDB(id))
-    }else{
-      dispatch(postActions.cancleBookmarkDB(id))
+  };
+  const bookmark = () => {
+    if (bookmarkState == false) {
+      dispatch(postActions.addBookmarkDB(id));
+    } else {
+      dispatch(postActions.cancleBookmarkDB(id));
     }
-  }
+  };
 
   const deletePost = () => {
     dispatch(postActions.deletePostDB(id));
@@ -44,6 +44,10 @@ const Post = (props) => {
 
   const editPost = () => {
     history.push(`/edit/${id}`);
+  };
+
+  const goMypage = (userId) => {
+    history.push(`/MyPage/${userId}`);
   };
 
   return (
@@ -74,7 +78,16 @@ const Post = (props) => {
       <PostHeader>
         <div style={{ width: "90%", display: "flex", alignItems: "center" }}>
           <Image imageType="circle" />
-          <Text bold color="#323232" margin="10px">
+          <Text
+            bold
+            color="#323232"
+            margin="10px"
+            _onClick={() => {
+              console.log(props.userId);
+              goMypage(props.userId);
+            }}
+            cursor="pointer"
+          >
             {props.nickname}
           </Text>
         </div>
@@ -93,17 +106,30 @@ const Post = (props) => {
               justifyContent: "space-between",
             }}
           >
-            {likeState?<IconButton likeIcon color="pink" _onClick={like}/>:<IconButton unLikeIcon color="black"_onClick={like}/>}
+            {likeState ? (
+              <IconButton likeIcon color="pink" _onClick={like} />
+            ) : (
+              <IconButton unLikeIcon color="black" _onClick={like} />
+            )}
             <IconButton message color="black" />
             <IconButton airplane color="black" />
           </div>
-          {bookmarkState?<IconButton bookmarkFill color="black" _onClick={bookmark}/>:<IconButton bookmark _onClick={bookmark} color="black"/> }
+          {bookmarkState ? (
+            <IconButton bookmarkFill color="black" _onClick={bookmark} />
+          ) : (
+            <IconButton bookmark _onClick={bookmark} color="black" />
+          )}
         </PostContentHeader>
         <PostContentContent>
-          <Text bold margin="10px 0px -10px 0px" >
+          <Text bold margin="10px 0px -10px 0px">
             좋아요 {props.likeCount}개
           </Text>
-            <Text><span style={{fontWeight:"bold", marginRight:"5px"}}>{props.nickname}</span>{props.content}</Text>
+          <Text>
+            <span style={{ fontWeight: "bold", marginRight: "5px" }}>
+              {props.nickname}
+            </span>
+            {props.content}
+          </Text>
           <Text
             size="14px"
             margin="-10px 0px 0px 0px"

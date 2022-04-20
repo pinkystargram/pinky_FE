@@ -51,7 +51,16 @@ api.interceptors.response.use(
       if (response.data.reason === "리프레쉬 토큰까지 만료됐어요") {
         deleteCookie("ACCESS_TOKEN");
         deleteCookie("REFRESH_TOKEN");
-        history.push("/login");
+        return history.push("/login");
+      }
+
+      if (
+        response.data.reason ===
+        "access토큰에 문제가 있네요(기한만료가 아닌 에러)"
+      ) {
+        deleteCookie("ACCESS_TOKEN");
+        deleteCookie("REFRESH_TOKEN");
+        return history.push("/login");
       }
     }
     return Promise.reject(error);

@@ -18,6 +18,10 @@ const Header = () => {
     return setDropmenu(!dropmenu);
   };
 
+  const dropDown = () => {
+    return setDropmenu(false);
+  };
+
   const logOut = () => {
     dropToggle();
     dispatch(_logoutFX());
@@ -42,8 +46,12 @@ const Header = () => {
 
   const isLogin = useSelector((state) => state.user.is_login);
 
-  if (user_info.userId == undefined) {
-    console.log("제발 오류 ㄴㄴ");
+  // if (user_info.userId == undefined) {
+  //   console.log("제발 오류 ㄴㄴ");
+  //   return <></>;
+  // }
+
+  if (user_info == null) {
     return <></>;
   }
 
@@ -71,7 +79,12 @@ const Header = () => {
                   로그아웃
                 </p>
                 <hr />
-                <p onClick={goMypage} style={{ cursor: "pointer" }}>
+                <p
+                  onClick={() => {
+                    goMypage(user_info.userId);
+                  }}
+                  style={{ cursor: "pointer" }}
+                >
                   프로필
                 </p>
               </DropContent>

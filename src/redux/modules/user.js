@@ -115,6 +115,8 @@ export const _loginCheckFX = () => {
           window.alert("로그인 시간이 만료되었습니다.");
           history.push("/login");
         });
+    } else {
+      dispatch(_logoutFX());
     }
   };
 };
@@ -125,7 +127,8 @@ export const _logoutFX = () => {
     deleteCookie("REFRESH_TOKEN");
 
     dispatch(logOut());
-    history.replace("/login");
+    // window.location.reload();
+    history.push("/login");
   };
 };
 
@@ -156,13 +159,7 @@ export const _FollowingUserFX = (userId) => {
       const { data } = await api.post(`/api/users/${userId}/follow`);
       console.log(getState());
 
-      const _recommend_list = getState().user.recommend;
-
-      const user_index = _recommend_list.findIndex((b) => {
-        return b.userId === userId;
-      });
-
-      dispatch(followingUser(user_index));
+      dispatch(followingUser(userId));
     } catch (error) {
       console.log(error);
     }
@@ -194,6 +191,11 @@ export default handleActions(
     [FOLLOWING_USER]: (state, action) =>
       produce(state, (draft) => {
         console.log(state, action.payload);
+        draft.recommend.map((e) => {
+          if (action.payload === e.userId) {
+            return (e.following_edit = !e.following_edit);
+          }
+        });
         // draft.recommend = action.payload.data;
       }),
   },

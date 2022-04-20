@@ -15,6 +15,9 @@ const RecommendList = () => {
   useEffect(() => {
     console.log("팔로우 추천 시작");
     dispatch(_getRecommendFX());
+    return () => {
+      console.log("컴포넌트가 화면에서 사라짐");
+    };
   }, []);
 
   if (recommend.recommend.length == null) {

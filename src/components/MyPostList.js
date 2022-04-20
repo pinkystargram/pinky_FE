@@ -3,39 +3,62 @@ import styled from "styled-components";
 import { Image, Grid, Text, IconButton } from "../elements";
 import { useDispatch, useSelector } from "react-redux";
 import { _logoutFX } from "../redux/modules/user";
+import { useParams } from "react-router-dom";
+import { _getMyProfileFX, _getMyPostFX } from "../redux/modules/mypage";
 
 import MyPost from "./MyPost";
 
-const MyInfo = () => {
+const MyPostList = () => {
   const dispatch = useDispatch();
+  const myProfile = useSelector((state) => state.mypage.list);
+  const mypost = useSelector((state) => state.mypage.mypost);
+  const params = useParams();
+  const userId = params.userId;
+
+  console.log(myProfile);
+  console.log(mypost);
+
+  React.useEffect(() => {
+    dispatch(_getMyProfileFX(userId));
+    dispatch(_getMyPostFX(userId));
+  }, [userId]);
+
+  // if (myProfile == undefined || mypost == undefined) {
+  //   console.log("되라 제발");
+  //   return <></>;
+  // }
 
   return (
     <>
       <Grid
         display="flex"
-        maxWidth="800px"
-        minWidth="550px"
+        maxWidth="880px"
+        minWidth="500px"
         width="100%"
         height="200px"
         margin="0 auto"
-        justifyContent="center"
         alignItem="center"
       >
         <Image
           imageType="mypage_profile"
           size="150"
-          margin="0px 30px"
-          src="https://file.mk.co.kr/meet/neds/2020/03/image_readtop_2020_226503_15832856704110300.jpg"
+          margin="0px 30px 0 75px"
+          src={myProfile.profileImageUrl}
         />
-        <Grid width="350px" display="flex" flexDirection="column">
+        <Grid
+          width="350px"
+          display="flex"
+          flexDirection="column"
+          margin="0 0 0 46px"
+        >
           <Grid
             display="flex"
             alignItems="center"
-            padding="10px 5px"
+            // padding="10px 5px"
             height="35px"
           >
             <Text size="25px" margin="0" color="#323232">
-              u_display
+              {myProfile?.nickname}
             </Text>
             <ProfileBtn>프로필 편집</ProfileBtn>
             <IconButton setting size="20px" color="#323232"></IconButton>
@@ -45,12 +68,12 @@ const MyInfo = () => {
             alignItems="center"
             justifyContent="space-between"
           >
-            <Text>게시물 345</Text>
-            <Text>팔로워 1,092</Text>
-            <Text>팔로우 774</Text>
+            <Text>게시물 {myProfile?.postCount} </Text>
+            <Text>팔로워 {myProfile?.followerCount} </Text>
+            <Text>팔로우 {myProfile?.followCount} </Text>
           </Grid>
           <Grid display="flex" alignItems="stretch">
-            <Text margin="0">핑키스타그램을 위한 나만의 페이지</Text>
+            <Text margin="0">{myProfile?.bio}</Text>
           </Grid>
         </Grid>
       </Grid>
@@ -95,9 +118,8 @@ const MyInfo = () => {
           <Span style={{ color: "#8E8E8E" }}> 저장됨</Span>
         </Grid>
       </Grid>
-
       <Grid>
-        <MyPost></MyPost>
+        <MyPost mypost={mypost}></MyPost>
       </Grid>
     </>
   );
@@ -125,4 +147,4 @@ const Line = styled.div`
   border-bottom: 1px solid #dbdbdb;
 `;
 
-export default MyInfo;
+export default MyPostList;
