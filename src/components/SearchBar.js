@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { Grid, Text, Image } from "../elements";
 import { _searchUserFX } from "../redux/modules/user";
+import { history } from "../redux/configStore";
 
 const SearchBar = () => {
   const dispatch = useDispatch();
@@ -11,6 +12,10 @@ const SearchBar = () => {
   const searchList = useSelector((state) => state.user.search_user);
 
   console.log(searchList);
+
+  const goMypage = (userId) => {
+    history.push(`/MyPage/${userId}`);
+  };
 
   const openToggle = () => {
     setResult(!result);
@@ -59,7 +64,15 @@ const SearchBar = () => {
                       display="inline"
                       width="auto"
                     >
-                      <span>{user.nickname}</span>
+                      <span
+                        style={{ cursor: "pointer" }}
+                        onClick={() => {
+                          goMypage(user.userId);
+                          openToggle();
+                        }}
+                      >
+                        {user.nickname}
+                      </span>
                     </Text>
                   </Grid>
                 );
