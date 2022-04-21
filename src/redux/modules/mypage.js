@@ -60,12 +60,6 @@ export const _getMyPostFX = (userId) => {
       .then((res) => {
         console.log(res);
         dispatch(getMyPost(res.data.data));
-        // dispatch(
-        //   getMyPost({
-        //     imageUrl: res.data.data.imageUrl,
-        //     postId: res.data.postId,
-        //   })
-        // );
       })
       .catch((error) => {
         console.log(error);
@@ -99,6 +93,32 @@ export const _getFollowerFX = (userId) => {
       })
       .catch((error) => {
         console.log(error);
+      });
+  };
+};
+
+export const _editProfileFX = (nickname, profileImageUrl, bio, userId) => {
+  return function (dispatch, getState, { history }) {
+    console.log(nickname, profileImageUrl, bio, userId);
+    const formData = new FormData();
+    const config = {
+      header: {
+        "content-type": "multipart/form-data",
+      },
+    };
+    formData.append("nickname", nickname);
+    formData.append("profileImageUrl", profileImageUrl);
+    formData.append("bio", bio);
+    api
+      .put("/api/users/info", formData, config)
+      .then((res) => {
+        history.replace(`/MyPage/${userId}`);
+        console.log(res);
+        return;
+      })
+      .catch((err) => {
+        console.log(err);
+        alert(err.response.data.message);
       });
   };
 };

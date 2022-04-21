@@ -64,7 +64,13 @@ const MyPostList = () => {
             <Text size="25px" margin="0" color="#323232">
               {myProfile?.nickname}
             </Text>
-            <ProfileBtn>프로필 편집</ProfileBtn>
+            <ProfileBtn
+              onClick={() => {
+                history.push(`/profileEdit/${userId}`);
+              }}
+            >
+              프로필 편집
+            </ProfileBtn>
             <IconButton setting size="20px" color="#323232"></IconButton>
           </Grid>
           <Grid
@@ -76,7 +82,9 @@ const MyPostList = () => {
             <Text _onClick={goFollower} cursor="pointer">
               팔로워 {myProfile?.followerCount}
             </Text>
-            <Text _onClick={goFollowing}>팔로우 {myProfile?.followCount} </Text>
+            <Text _onClick={goFollowing} cursor="pointer">
+              팔로우 {myProfile?.followCount}{" "}
+            </Text>
           </Grid>
           <Grid display="flex" alignItems="stretch">
             <Text margin="0">{myProfile?.bio}</Text>
@@ -140,6 +148,7 @@ const ProfileBtn = styled.button`
   border: 1px solid #e4e4e4;
   margin: 0 10px;
   font-weight: 800;
+  line-height: 10px;
 `;
 
 const Span = styled.span`

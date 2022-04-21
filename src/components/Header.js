@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { IconButton, Text, Grid } from "../elements/index";
 import Image from "../elements/Image";
@@ -7,13 +7,24 @@ import { useHistory } from "react-router-dom";
 import MediaQuery, { useMediaQuery } from "react-responsive";
 import { _logoutFX } from "../redux/modules/user";
 import { useSelector, useDispatch } from "react-redux";
+import SearchBar from "./SearchBar";
+import { _getMyProfileFX } from "../redux/modules/mypage";
 
 
 const Header = () => {
   const dispatch = useDispatch();
   const [dropmenu, setDropmenu] = React.useState(false);
-  const user_info = useSelector((state) => state.user.user);
-  console.log(user_info);
+
+  const user = useSelector((state) => state.user);
+  console.log(user);
+
+  const myProfile = useSelector((state) => state.mypage.list);
+  console.log(myProfile);
+
+  React.useEffect(() => {
+    console.log(user.user.userId);
+    dispatch(_getMyProfileFX(user.user.userId));
+  }, []);
 
   const dropToggle = () => {
     return setDropmenu(!dropmenu);
@@ -45,20 +56,11 @@ const Header = () => {
     history.push(`/MyPage/${userId}`);
   };
 
-  const goDM=(userId)=>{
+  const goDM = (userId) => {
     history.push(`/directmessage/${userId}`);
-  }
+  };
 
   const isLogin = useSelector((state) => state.user.is_login);
-
-  // if (user_info.userId == undefined) {
-  //   console.log("제발 오류 ㄴㄴ");
-  //   return <></>;
-  // }
-
-  if (user_info == null) {
-    return <></>;
-  }
 
   if (isLogin) {
     return (
@@ -68,11 +70,12 @@ const Header = () => {
           {isPc ? <SearchBar /> : null}
           <IConBtns>
             <IconButton home color="black" _onClick={goMain} />
-            <IconButton airplane color="black" _onClick={goDM}/>
+            <IconButton airplane color="black" _onClick={goDM} />
             <IconButton plusIcon _onClick={goWrite} color="black" />
             <IconButton compass color="black" />
             <IconButton unLikeIcon color="black"/>
             <Image
+              src={myProfile?.profileImageUrl}
               cursor="pointer"
               imageType="circle"
               color="black"
@@ -86,7 +89,7 @@ const Header = () => {
                 <hr />
                 <p
                   onClick={() => {
-                    goMypage(user_info.userId);
+                    goMypage(user.user?.userId);
                   }}
                   style={{ cursor: "pointer" }}
                 >
@@ -126,14 +129,6 @@ const HeaderWrap = styled.div`
   top: 0;
   left: 0;
   z-index: 1;
-`;
-const SearchBar = styled.input`
-  border: none;
-  background: grey;
-  border-radius: 5px;
-  height: 23px;
-  width: 250px;
-  background: #e4e4e4;
 `;
 
 const HeaderWrapper = styled.div`

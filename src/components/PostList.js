@@ -10,9 +10,7 @@ const PostList = () => {
   const postlist = useSelector((state) => state.post.post);
   const paging = useSelector((state) => state.post.paging);
   const is_loading = useSelector((state) => state.post.is_loading);
-  // React.useEffect(() => {
-  //     dispatch(postActions.getPostDB());
-  //   }, []);
+
   React.useEffect(() => {
     if (postlist.length === 0) {
       dispatch(postActions.getPostDB());

@@ -1,21 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { Text, IconButton, Image, Grid } from "../elements/index";
 import { useHistory } from "react-router-dom";
 import { actionCreators as postActions } from "../redux/modules/post";
 import CommentsWrite from "./CommentWrite";
 import { useDispatch, useSelector } from "react-redux";
+import { _getCommentFX } from "../redux/modules/comments";
 
 const Post = (props) => {
   const dispatch = useDispatch();
   console.log(props);
   const userId = props.userId;
-  const profile=props.profileImageUrl;
+  const profile = props.profileImageUrl;
   const likeState = props.likeState;
   const bookmarkState = props.bookmarkState;
   const [isOpen, setMenu] = React.useState(false);
   const id = props.postId;
   const history = useHistory();
+
+  const commentCnt = useSelector((state) => state.comments.list[0]);
+  console.log(commentCnt);
+
   const goDetail = () => {
     history.push(`/post/${id}`);
   };
@@ -84,7 +89,7 @@ const Post = (props) => {
       )}
       <PostHeader>
         <div style={{ width: "90%", display: "flex", alignItems: "center" }}>
-          <img src={profile} style={{width:"40px",height:"40px",borderRadius:"50%"}}/>
+          <Image src={props.profileImageUrl} imageType="circle" />
           <Text
             bold
             color="#323232"

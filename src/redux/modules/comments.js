@@ -50,6 +50,7 @@ export const _addCommentFX = (postId, content) => {
         console.log(res.data.data);
         dispatch(addComm(res.data.data.commentList));
         window.alert("댓글 등록 완료");
+        window.location.reload();
       })
       .catch((error) => {
         console.log(error);
@@ -82,6 +83,8 @@ export default handleActions(
 
     [ADD_COMM]: (state, action) =>
       produce(state, (draft) => {
+        console.log(state);
+        console.log(action.payload);
         draft.list.push(action.payload);
       }),
     [DELETE_COMM]: (state, action) =>

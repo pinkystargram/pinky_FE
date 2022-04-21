@@ -69,7 +69,7 @@ const CommentItem = (props) => {
           height="60px"
         >
           <Image
-            src="https://cdn.mhns.co.kr/news/photo/202003/401582_512253_4343.jpg"
+            src={props.profileImageUrl}
             imageType="circle"
             size="35"
             margin="5px 15px"

@@ -19,6 +19,7 @@ import Header from "../components/Header";
 import EditPost from "../pages/EditPost";
 import Follower from "../pages/Follower";
 import Following from "../pages/Following";
+import ProfileEdit from "../pages/ProfileEdit";
 
 function App() {
   const dispatch = useDispatch();
@@ -41,7 +42,8 @@ function App() {
         <Route path="/MyPage/:userId" exact component={MyPage} />
         <Route path="/MyPage/:userId/followers" exact component={Follower} />
         <Route path="/MyPage/:userId/following" exact component={Following} />
-        <Route path="/post/:id" exact component={Detail}/>
+        <Route path="/post/:id" exact component={Detail} />
+        <Route path="/profileEdit/:userId" exact component={ProfileEdit} />
       </ConnectedRouter>
     </React.Fragment>
   );

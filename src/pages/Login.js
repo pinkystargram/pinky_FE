@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import {} from "react-icons";
 import { Text, IconButton, Image } from "../elements";
 import { useDispatch, useSelector } from "react-redux";
-import { _loginFX, _loginCheckFX } from "../redux/modules/user";
+import { _loginFX, _loginCheckFX, kakaoLogin } from "../redux/modules/user";
 import { emailCheck } from "../shared/Common";
 import Logo from "../assets/logo.png";
 
@@ -35,7 +35,7 @@ const Login = () => {
 
   useEffect(() => {
     if (isLogin) history.push("/");
-  });
+  }, []);
 
   return (
     <React.Fragment>
@@ -72,13 +72,25 @@ const Login = () => {
             </Text>
             <Line />
           </LineGrid>
-          <FacebookGrid>
-            <IconButton
-              facebookLogo
-              margin="0 8px 0 0"
-              color="#0095f6"
-            ></IconButton>
-            <Span> Facebook으로 로그인 </Span>
+          <FacebookGrid
+            onClick={() => {
+              dispatch(kakaoLogin());
+            }}
+          >
+            <svg
+              width="16"
+              height="15"
+              viewBox="0 0 16 15"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M7.99429 0C3.56888 0 0 2.89573 0 6.41119C0 8.69305 1.48465 10.6911 3.71164 11.8321L2.95789 14.6873C2.94368 14.7301 2.94149 14.776 2.95158 14.82C2.96166 14.864 2.98362 14.9043 3.01499 14.9363C3.06073 14.9772 3.11959 14.9999 3.18059 15C3.23116 14.9959 3.27914 14.9756 3.31763 14.9421L6.56103 12.724C7.03979 12.791 7.52241 12.8258 8.00571 12.8282C12.4254 12.8282 16 9.93244 16 6.41119C16 2.88994 12.414 0 7.99429 0Z"
+                fill="#392020"
+              />
+            </svg>
+
+            <Span> 카카오톡으로 로그인 </Span>
           </FacebookGrid>
           <Grid>
             <Atag>비밀번호를 잊으셨나요?</Atag>
@@ -223,13 +235,22 @@ const FacebookGrid = styled.div`
   align-items: center;
   margin: 10px auto;
   cursor: pointer;
+  background-color: #fae301;
+  width: 300px;
+  height: 33px;
+  line-height: 23px;
+  padding: 5px 0;
+  border-radius: 5px;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
 `;
 
 const Span = styled.span`
   display: inline-block;
-  margin: 0 auto 0 0;
+  margin: 0 0 0 5px;
   font-size: 14px;
-  color: #385185;
+  color: #391b1b;
   font-weight: bold;
 `;
 
