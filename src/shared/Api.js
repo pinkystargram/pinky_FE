@@ -4,7 +4,7 @@ import { history } from "../redux/configStore";
 import { logIn, _loginCheckFX } from "../redux/modules/user";
 import { useDispatch } from "react-redux";
 
-axios.defaults.withCredentials = true;
+// axios.defaults.withCredentials = true;
 
 export const api = axios.create({
   // 실제 베이스 유알엘
