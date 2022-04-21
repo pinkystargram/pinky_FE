@@ -108,12 +108,9 @@ export const _loginFX = (email, password) => {
 export const kakaoLogin = (code) => {
   return function (dispatch, getState, { history }) {
     api
-      .get(
-        "/api/auth/kakao"
-        // `https://stgon.shop/api/auth/kakao/callback?code=${code}`
-      )
+      .get("/api/auth/kakao")
       .then((res) => {
-        console.log(res);
+        console.log("카카오 로그인 성공", res);
         // const token = res.data.token;
         // const userId = res.data.userId;
         // const snsId = res.data.snsId;
@@ -126,7 +123,7 @@ export const kakaoLogin = (code) => {
         // window.location.replace("/"); // 토큰 받고 로그인되면 화면 전환(메인으로)
       })
       .catch((err) => {
-        console.log("소셜로그인 에러", err);
+        console.log("카카오 로그인 에러", err);
         // window.alert("로그인에 실패하였습니다.");
         // window.location.replace("/"); // 로그인 실패하면 로그인화면으로 보내기
       });

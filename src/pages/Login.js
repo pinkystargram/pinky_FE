@@ -74,7 +74,8 @@ const Login = () => {
           </LineGrid>
           <FacebookGrid
             onClick={() => {
-              dispatch(kakaoLogin());
+              window.alert("기능 없지롱~");
+              // dispatch(kakaoLogin());
             }}
           >
             <svg
