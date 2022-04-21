@@ -72,7 +72,7 @@ const RecommendList = () => {
           모두 보기
         </Text>
       </RecommendHeader>
-      <Grid margin="5px 20px" overflow="auto" height="300px" width="320px">
+      <Grid margin="5px 20px" height="300px" width="320px">
         {recommend.recommend.map((recommend, idx) => {
           return <RecommendItem key={idx} {...recommend} />;
         })}
