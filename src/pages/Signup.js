@@ -61,24 +61,25 @@ const Signup = (props) => {
         </Text>
 
         <Grid>
-          <SignupBtn
-            _onClick={() => {
-              console.log("facebook 로그인");
-            }}
+          <a
+            style={{ textDecoration: "none" }}
+            href="https://ggulduk2.shop/api/users/facebook"
           >
-            <FacebookGrid
-              onClick={() => {
-                console.log("페북로그인");
+            <SignupBtn
+              _onClick={() => {
+                console.log("facebook 로그인");
               }}
             >
-              <IconButton
-                facebookLogo
-                margin="0 8px 0 0"
-                color="#FFFFFF"
-              ></IconButton>
-              Facebook으로 로그인
-            </FacebookGrid>
-          </SignupBtn>
+              <FacebookGrid>
+                <IconButton
+                  facebookLogo
+                  margin="0 8px 0 0"
+                  color="#FFFFFF"
+                ></IconButton>
+                Facebook으로 로그인
+              </FacebookGrid>
+            </SignupBtn>
+          </a>
 
           <LineGrid>
             <Line />

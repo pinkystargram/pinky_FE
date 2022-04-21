@@ -104,8 +104,8 @@ export const _loginFX = (email, password) => {
   };
 };
 
-//카카오로그인
-// export const kakaoLogin = (code) => {
+// 카카오로그인
+// export const kakaoLogin = () => {
 //   return function (dispatch, getState, { history }) {
 //     api
 //       .get("/api/auth/kakao")
