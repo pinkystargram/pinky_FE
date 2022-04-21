@@ -142,6 +142,7 @@ const getPostDB = (page=1,size=3) => {
       };
       console.log(paging)
       dispatch(getPost(data,paging));
+      
     } catch (error) {
       console.log(error);
     }
@@ -183,8 +184,8 @@ const deletePostDB = (postId) => {
         .patch(`/api/posts/${postId}`,{"content":content,"location":location})
         .then(function (response) {
           console.log(response);
-          history.replace("/");
-     
+          history.push("/");
+          window.location.reload();
         })
         .catch(function (err) {
           alert("본인이 작성한 글이 아닙니다");
@@ -205,8 +206,6 @@ export default handleActions(
       produce(state, (draft) => {
         draft.post.push(...action.payload.postList.data);
         draft.is_loading=false;
-        console.log(action.payload);
-        console.log(action.payload.postList.data)
     if (action.payload.paging) {
       draft.paging = action.payload.paging;
     }

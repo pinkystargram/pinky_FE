@@ -11,7 +11,7 @@ function Test() {
 	const socketRef = useRef()
 	useEffect(
 		() => {
-			socketRef.current = io.connect("https:/localhost:3000")
+			socketRef.current = io.connect("https://ggulduk2.shop/api/chat/message/123")
 			socketRef.current.on("message", ({ name, message }) => {
 				setChat([ ...chat, { name, message } ])
 			})
@@ -42,9 +42,7 @@ function Test() {
 	}
 
 	return (
-
-        <div style={{width:"1000px", margin:"0 auto", marginTop:"100px"}}>
-<div className="card">
+		<div className="card">
 			<form onSubmit={onMessageSubmit}>
 				<h1>Messenger</h1>
 				<div className="name-field">
@@ -67,8 +65,6 @@ function Test() {
 				{renderChat()}
 			</div>
 		</div>
-        </div>
-		
 	)
 }
 
