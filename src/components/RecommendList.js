@@ -11,7 +11,7 @@ const RecommendList = () => {
 
   const recommend = useSelector((state) => state.user);
   console.log(recommend);
-
+  
   useEffect(() => {
     console.log("팔로우 추천 시작");
     dispatch(_getRecommendFX());

@@ -79,7 +79,6 @@ function MyDropzone() {
       <DropBoxTitle>
         {onfile?<Grid margin="0px 0px 0px 110px"><Text bold>새 게시물 만들기</Text></Grid>
         :<Grid margin="0px 0px 0px 110px"><Text bold>새 게시물 만들기</Text></Grid>}
-
         <Grid margin="0px -150px 0px 0px">
           {onfile?<Text color="rgb(231, 38, 116)" bold cursor="pointer" _onClick={goNext}>다음</Text>:null}
         </Grid>

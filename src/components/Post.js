@@ -5,12 +5,12 @@ import { useHistory } from "react-router-dom";
 import { actionCreators as postActions } from "../redux/modules/post";
 import CommentsWrite from "./CommentWrite";
 import { useDispatch, useSelector } from "react-redux";
-import {actionCreators as DMActions} from "../redux/modules/dm";
 
 const Post = (props) => {
   const dispatch = useDispatch();
   console.log(props);
   const userId = props.userId;
+  const profile=props.profileImageUrl;
   const likeState = props.likeState;
   const bookmarkState = props.bookmarkState;
   const [isOpen, setMenu] = React.useState(false);
@@ -20,9 +20,8 @@ const Post = (props) => {
     history.push(`/post/${id}`);
   };
 
-  const goDMWrite = () => {
-    dispatch(DMActions.addRoomDB(userId))
-    // history.push(`/directmessage/${userId}`);
+  const goDMWrite = (props) => {
+    history.push(`/DmList/${id}`);
   };
 
   const modalUp = () => {
@@ -85,7 +84,7 @@ const Post = (props) => {
       )}
       <PostHeader>
         <div style={{ width: "90%", display: "flex", alignItems: "center" }}>
-          <Image imageType="circle" />
+          <img src={profile} style={{width:"40px",height:"40px",borderRadius:"50%"}}/>
           <Text
             bold
             color="#323232"

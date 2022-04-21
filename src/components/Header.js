@@ -8,6 +8,7 @@ import MediaQuery, { useMediaQuery } from "react-responsive";
 import { _logoutFX } from "../redux/modules/user";
 import { useSelector, useDispatch } from "react-redux";
 
+
 const Header = () => {
   const dispatch = useDispatch();
   const [dropmenu, setDropmenu] = React.useState(false);
@@ -70,7 +71,7 @@ const Header = () => {
             <IconButton airplane color="black" _onClick={goDM}/>
             <IconButton plusIcon _onClick={goWrite} color="black" />
             <IconButton compass color="black" />
-            <IconButton unLikeIcon color="black" />
+            <IconButton unLikeIcon color="black"/>
             <Image
               cursor="pointer"
               imageType="circle"
