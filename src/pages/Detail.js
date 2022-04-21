@@ -65,7 +65,9 @@ const Detail = (props) => {
             <IconButton moreView size="16px" color="#323232" />
           </PostHeader>
           <CommentListWrapper>
-            <CommentList />
+            <CommentList
+              image={targetPostOne.data.commentList.profileImageUrl}
+            />
           </CommentListWrapper>
           <PostContentContent>
             <Text bold>좋아요 {targetPostOne.data.likeCount}개</Text>

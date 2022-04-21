@@ -43,22 +43,24 @@ const CommentsWrite = (props) => {
         }}
         onSubmit={write}
       ></CommentInput>
-      {comm.length > 0 ? (
-        <Text
-          _onClick={write}
-          bold
-          color="#e72674"
-          margin="13px 0px 10px 13px"
-          cursor="pointer"
-          size="15px"
-        >
-          게시
-        </Text>
-      ) : (
-        <Text size="15px" bold color="#F2A6C5" margin="13px 0px 10px 13px">
-          게시
-        </Text>
-      )}
+      <Grid display="flex" width="60px" margin="0" padding="0 0 0 10px">
+        {comm.length > 0 ? (
+          <Text
+            _onClick={write}
+            bold
+            color="#e72674"
+            margin="13px 0px 10px 13px"
+            cursor="pointer"
+            size="15px"
+          >
+            게시
+          </Text>
+        ) : (
+          <Text size="15px" bold color="#F2A6C5" margin="13px 0px 10px 13px">
+            게시
+          </Text>
+        )}
+      </Grid>
     </Grid>
   );
 };

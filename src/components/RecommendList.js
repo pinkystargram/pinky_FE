@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Text, Grid, Image } from "../elements/index";
 import { _getRecommendFX } from "../redux/modules/user";
 import Footer from "./Footer";
+import { _getMyProfileFX } from "../redux/modules/mypage";
+import { history } from "../redux/configStore";
 
 const RecommendList = () => {
   const dispatch = useDispatch();
@@ -12,12 +14,22 @@ const RecommendList = () => {
   const recommend = useSelector((state) => state.user);
   console.log(recommend);
 
+  const user = useSelector((state) => state.user);
+  console.log(user);
+
+  const myProfile = useSelector((state) => state.mypage.list);
+  console.log(myProfile);
+
+  const goMypage = () => {
+    history.push(`/MyPage/${userId}`);
+  };
+
+  const userId = localStorage.getItem("userId");
+
   useEffect(() => {
     console.log("팔로우 추천 시작");
     dispatch(_getRecommendFX());
-    return () => {
-      console.log("컴포넌트가 화면에서 사라짐");
-    };
+    dispatch(_getMyProfileFX(userId));
   }, []);
 
   if (recommend.recommend.length == null) {
@@ -27,21 +39,22 @@ const RecommendList = () => {
 
   return (
     <>
-      <MyProfile>
+      <MyProfile
+        onClick={() => {
+          goMypage();
+        }}
+      >
         <div>
           <Image
-            src={recommend.user.profileImageUrl}
+            src={myProfile?.profileImageUrl}
             imageType="circle"
             size="50"
           />
         </div>
-        <Grid is_flex>
+        <Grid display="flex" alignItems="center">
           <Grid margin="-20px 0px 0px 0px" padding="0px 10px">
             <Text bold color="#2a2a2a" size="14px">
-              {recommend.user.nickname}
-            </Text>
-            <Text bold color="#949494" size="14px" margin="-14px 0px 0px 0px">
-              {/* {recommend.user.nickname} */}
+              {myProfile?.nickname}
             </Text>
           </Grid>
           <Grid width="40px" margin="0px -10px 0px 0px">
@@ -72,7 +85,8 @@ const RecommendList = () => {
 RecommendList.defaultProps = {
   userId: "userId@naver.com",
   nickname: "nickname",
-  profileImageUrl: "https://www.snsboom.co.kr/common/img/default_profile.png",
+  profileImageUrl:
+    "https://cdn.dribbble.com/users/1338391/screenshots/15264109/media/1febee74f57d7d08520ddf66c1ff4c18.jpg?compress=1&resize=400x300&vertical=top",
 };
 
 const MyProfile = styled.div`
@@ -81,8 +95,9 @@ const MyProfile = styled.div`
   box-sizing: border-box;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+
   margin-left: 20px;
+  cursor: pointer;
 `;
 
 const RecommendHeader = styled.div`

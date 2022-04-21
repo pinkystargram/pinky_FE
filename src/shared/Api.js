@@ -1,6 +1,8 @@
 import axios from "axios";
 import { deleteCookie, getCookie, setCookie } from "./Cookie";
 import { history } from "../redux/configStore";
+import { logIn, _loginCheckFX } from "../redux/modules/user";
+import { useDispatch } from "react-redux";
 
 export const api = axios.create({
   // 실제 베이스 유알엘
@@ -39,6 +41,11 @@ api.interceptors.response.use(
     } = error;
 
     const originalRequest = config;
+    // const dispatch = useDispatch();
+
+    // if (status == undefined) {
+    //   return dispatch(_loginCheckFX());
+    // }
 
     if (status === 401) {
       if (response.data.atoken) {
@@ -46,20 +53,11 @@ api.interceptors.response.use(
         setCookie("ACCESS_TOKEN", response.data.atoken);
         originalRequest.headers.Authorization = `Bearer ${response.data.atoken}`;
         return axios(originalRequest);
-      }
-
-      if (response.data.reason === "리프레쉬 토큰까지 만료됐어요") {
+      } else if (response.data.result === false) {
         deleteCookie("ACCESS_TOKEN");
         deleteCookie("REFRESH_TOKEN");
-        return history.push("/login");
-      }
-
-      if (
-        response.data.reason ===
-        "access토큰에 문제가 있네요(기한만료가 아닌 에러)"
-      ) {
-        deleteCookie("ACCESS_TOKEN");
-        deleteCookie("REFRESH_TOKEN");
+        localStorage.removeItem("userId");
+        window.alert("로그인 후 이용해 주세요");
         return history.push("/login");
       }
     }

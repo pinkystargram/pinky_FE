@@ -13,9 +13,7 @@ const PostList = () => {
   console.log(paging);
   console.log(is_loading);
   console.log(postlist);
-  // React.useEffect(() => {
-  //     dispatch(postActions.getPostDB());
-  //   }, []);
+
   React.useEffect(() => {
     if (postlist.length === 0) {
       dispatch(postActions.getPostDB());

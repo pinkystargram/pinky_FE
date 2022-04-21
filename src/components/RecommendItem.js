@@ -43,12 +43,12 @@ const RecommendItem = (props) => {
             _onClick={() => {
               following(props.userId);
             }}
-            color="rgb(231, 38, 116)"
+            color="rgba(50, 81, 119, 1)"
             size="12px"
             bold
             cursor="pointer"
           >
-            팔로우
+            언팔
           </Text>
         ) : (
           <Text

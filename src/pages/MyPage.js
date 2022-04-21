@@ -16,7 +16,7 @@ const MyPage = () => {
 };
 
 const Wrap = styled.div`
-  background-color: #fafafa;
+  /* background-color: #fafafa; */
   padding-top: 100px;
 `;
 

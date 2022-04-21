@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { Text, IconButton, Image, Grid } from "../elements/index";
 import { useHistory } from "react-router-dom";
 import { actionCreators as postActions } from "../redux/modules/post";
 import CommentsWrite from "./CommentWrite";
 import { useDispatch, useSelector } from "react-redux";
-import {actionCreators as DMActions} from "../redux/modules/dm";
+import { actionCreators as DMActions } from "../redux/modules/dm";
+import { _getCommentFX } from "../redux/modules/comments";
 
 const Post = (props) => {
   const dispatch = useDispatch();
@@ -16,12 +17,16 @@ const Post = (props) => {
   const [isOpen, setMenu] = React.useState(false);
   const id = props.postId;
   const history = useHistory();
+
+  const commentCnt = useSelector((state) => state.comments.list[0]);
+  console.log(commentCnt);
+
   const goDetail = () => {
     history.push(`/post/${id}`);
   };
 
   const goDMWrite = () => {
-    dispatch(DMActions.addRoomDB(userId))
+    dispatch(DMActions.addRoomDB(userId));
     // history.push(`/directmessage/${userId}`);
   };
 
@@ -85,7 +90,7 @@ const Post = (props) => {
       )}
       <PostHeader>
         <div style={{ width: "90%", display: "flex", alignItems: "center" }}>
-          <Image imageType="circle" />
+          <Image src={props.profileImageUrl} imageType="circle" />
           <Text
             bold
             color="#323232"

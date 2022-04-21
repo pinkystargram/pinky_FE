@@ -203,17 +203,14 @@ const InBox = styled.div`
 // --size 변수 쓸때 var(--size) 고고
 const ImageCircle = styled.div`
   --size: ${(props) => props.size}px;
-  // width: 36px;
-  // height: 36px;
-  // border-radius:50%;
   width: var(--size);
   height: var(--size);
-  border-radius:100%;
-  // min-width: 36px;
+  border-radius: 100%;
   background-image: url("${(props) => props.src}");
   background-size: cover;
   margin: ${(props) => props.margin};
   cursor: ${(props) => props.cursor};
+  display: ${(props) => props.display};
 `;
 
 // 마이페이지 프로필 커스텀

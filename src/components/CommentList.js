@@ -6,7 +6,7 @@ import { _getCommentFX } from "../redux/modules/comments";
 import { useParams } from "react-router-dom";
 import { Grid, Text, Image, IconButton } from "../elements";
 
-const CommentList = () => {
+const CommentList = (props) => {
   const dispatch = useDispatch();
   const commentList = useSelector((state) => state.comments.list);
   console.log(commentList);
@@ -30,7 +30,12 @@ const CommentList = () => {
     <CommentWrapper>
       <Grid display="flex" flexDirection="column">
         <Grid display="flex" alignItems="flex-start" margin="10px 0">
-          <Image src={MyImage} imageType="circle" size="35" margin="5px 15px" />
+          <Image
+            src={props.image}
+            imageType="circle"
+            size="35"
+            margin="5px 15px"
+          />
           <Grid display="flex" flexDirection="column">
             <Grid display="flex">
               <Text

@@ -203,7 +203,7 @@ const SignupGrid = styled.div`
   margin: 150px auto 0 auto;
 `;
 
-const FormGrid = styled.form`
+const FormGrid = styled.div`
   max-width: 350px;
   width: 100%;
   display: flex;
