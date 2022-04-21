@@ -10,7 +10,6 @@ import { useSelector, useDispatch } from "react-redux";
 import SearchBar from "./SearchBar";
 import { _getMyProfileFX } from "../redux/modules/mypage";
 
-
 const Header = () => {
   const dispatch = useDispatch();
   const [dropmenu, setDropmenu] = React.useState(false);
@@ -18,12 +17,14 @@ const Header = () => {
   const user = useSelector((state) => state.user);
   console.log(user);
 
+  const userId = localStorage.getItem("userId");
+
   const myProfile = useSelector((state) => state.mypage.list);
   console.log(myProfile);
 
   React.useEffect(() => {
-    console.log(user.user.userId);
-    dispatch(_getMyProfileFX(user.user.userId));
+    console.log(userId);
+    dispatch(_getMyProfileFX(userId));
   }, []);
 
   const dropToggle = () => {
@@ -62,7 +63,7 @@ const Header = () => {
 
   const isLogin = useSelector((state) => state.user.is_login);
 
-  if (isLogin) {
+  if (isLogin && userId) {
     return (
       <HeaderWrap>
         <HeaderWrapper>
@@ -73,7 +74,7 @@ const Header = () => {
             <IconButton airplane color="black" _onClick={goDM} />
             <IconButton plusIcon _onClick={goWrite} color="black" />
             <IconButton compass color="black" />
-            <IconButton unLikeIcon color="black"/>
+            <IconButton unLikeIcon color="black" />
             <Image
               src={myProfile?.profileImageUrl}
               cursor="pointer"
