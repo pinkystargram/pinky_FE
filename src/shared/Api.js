@@ -4,6 +4,8 @@ import { history } from "../redux/configStore";
 import { logIn, _loginCheckFX } from "../redux/modules/user";
 import { useDispatch } from "react-redux";
 
+axios.defaults.withCredentials = true;
+
 export const api = axios.create({
   // 실제 베이스 유알엘
   baseURL: "https://ggulduk2.shop",
@@ -34,11 +36,7 @@ api.interceptors.response.use(
     return response;
   },
   async (error) => {
-    const {
-      config,
-      response: { status },
-      response,
-    } = error;
+    const { config, response } = error;
 
     const originalRequest = config;
     // const dispatch = useDispatch();
@@ -47,13 +45,13 @@ api.interceptors.response.use(
     //   return dispatch(_loginCheckFX());
     // }
 
-    if (status === 401) {
-      if (response.data.atoken) {
+    if (response?.status === 401) {
+      if (response?.data.atoken) {
         console.log(response);
         setCookie("ACCESS_TOKEN", response.data.atoken);
         originalRequest.headers.Authorization = `Bearer ${response.data.atoken}`;
         return axios(originalRequest);
-      } else if (response.data.result === false) {
+      } else {
         deleteCookie("ACCESS_TOKEN");
         deleteCookie("REFRESH_TOKEN");
         localStorage.removeItem("userId");
